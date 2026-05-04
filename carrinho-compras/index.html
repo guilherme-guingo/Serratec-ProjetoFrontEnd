@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <!-- ============================================================== -->
+    <!-- CONFIGURAÇÕES DE CABEÇALHO                                     -->
+    <!-- ============================================================== -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Devcare - Carrinho</title>
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Google Fonts: Tipografia -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- Google Material: Icones -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" /> 
+    
+    <!-- Arquivo CSS Local -->
+    <link rel="stylesheet" href="./style.css">   
+</head>
+
+<body>
+
+<!-- ============================================================== -->
+<!-- CONTEÚDO PRINCIPAL (MAIN) - CARRINHO DE COMPRAS               -->
+<!-- ============================================================== -->
+<main class="container cart-container">
+    <h1 class="serif mb-4">Carrinho de compras</h1>
+
+    <div class="cart-layout">
+        
+        <!-- COLUNA ESQUERDA: Itens do Carrinho -->
+        <div class="cart-card">
+            <div id="lista-produtos">
+                <!-- O JavaScript carregará os itens aqui -->
+            </div>            
+        </div>
+
+        <!-- COLUNA DIREITA: Resumo Financeiro -->
+        <div class="summary-box">
+            <div class="summary-row">
+                <span>Subtotal</span>
+                <span id="subtotal-valor">R$ 0,00</span>
+            </div>
+            <div class="summary-row">
+                <span>Desconto</span>
+                <span>- R$ 0,00</span>
+            </div>
+            
+            <div class="summary-row total-row">
+                <span>Total</span>
+                <span id="total-valor">R$ 0,00</span>
+            </div>
+            
+            <!-- Botão que dispara a função finalizarCompra() no script.js -->
+            <button class="btn-finalize">Finalizar compra</button>
+            
+            <div class="text-center">
+                <small class="text-muted">ou</small><br>
+                <a href="#" class="text-dark text-decoration-none small d-flex align-items-center justify-content-center gap-2 mt-2">
+                    <span class="material-symbols-rounded" style="font-size: 1.2rem;">person</span> Fazer login para continuar
+                </a>
+            </div>
+        </div>
+        
+    </div>
+</main>
+
+<!-- ============================================================== -->
+<!-- MODAL DE SUCESSO (COMPRA FINALIZADA)                           -->
+<!-- ============================================================== -->
+<div class="modal fade" id="modalSucesso" tabindex="-1" aria-hidden="true" data-bs-backdrop="static">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content border-0 shadow-lg">
+            <div class="modal-body text-center p-5">
+                <!-- Ícone de Sucesso animado pelo Material Symbols -->
+                <span class="material-symbols-rounded text-success mb-3" style="font-size: 5rem;">
+                    check_circle
+                </span>
+                
+                <h2 class="serif fw-bold">Pedido Confirmado!</h2>
+                <div class="d-grid">
+                    <!-- O botão recarrega a página para limpar o carrinho após o sucesso -->
+                    <button type="button" class="btn btn-dark btn-lg py-3" onclick="location.reload()">
+                        Voltar para a Loja
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ============================================================== -->
+<!-- SCRIPTS (JavaScript)                                           -->
+<!-- ============================================================== -->
+<!-- Bootstrap JS (Necessário para o funcionamento do Modal) -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- Script Lógico Local -->
+<script src="./script.js"></script>
+
+</body>
+</html>
