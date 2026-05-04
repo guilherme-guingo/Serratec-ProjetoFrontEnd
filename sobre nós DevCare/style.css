@@ -1,0 +1,313 @@
+/* RESET */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* HTML*/
+html {
+  font-size: 16px;
+}
+/* BODY E CARACTERISTICAS GERAIS*/
+body {
+  font-family: "Inter", sans-serif;
+  background-color: #f2efdc;
+  padding: 1.5rem 1.25rem;
+  color: #404040;
+}
+
+/* QUEBRA DE TEXTO */
+p,
+h1,
+h2,
+h3 {
+  word-break: break-word;
+}
+
+/* TIPOGRAFIA */
+h1,
+h2 {
+  font-family: "Playfair Display", serif;
+}
+
+h1 {
+  font-size: 2rem;
+}
+h2 {
+  font-size: 1.6rem;
+}
+
+p {
+  font-size: 1rem;
+  line-height: 1.6;
+}
+/* SECÕES COM CARACTERISTICAS ESPECIFICAS DE CADA */
+
+/* SEÇÃO 1: Apresentação */
+.destaque {
+  color: #6b7334;
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+.descricao {
+  font-size: 1rem;
+  margin-top: 1rem;
+}
+.imgEquipe {
+  width: 100%;
+  border-radius: 1rem;
+  margin-top: 1.5rem;
+}
+
+/*___________________________________________ */
+/* SEÇÃO 2: Indicadores */
+.sessao2 {
+  background: #6b7334;
+  border-radius: 2rem;
+  padding: 1rem;
+  margin-top: -3rem;
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-wrap: wrap;
+}
+.sessao2 div {
+  width: 100%;
+  padding: 0.6rem;
+  text-align: center;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+.sessao2 p,
+.dados {
+  color: #fff;
+}
+.sessao2 p {
+  font-size: 1rem;
+}
+/* Ícone */
+.sessao2 i {
+  color: #d9a273;
+  font-size: 1.8rem;
+}
+/* Dados em destaque */
+.dados {
+  font-size: 3.2rem;
+  font-weight: 700;
+  line-height: 1.1;
+}
+
+/*___________________________________________ */
+/* SEÇÃO 3: Missão, Visão e Valores */
+.sessao3 {
+  margin-top: 2rem;
+}
+
+.titMVV {
+  font-size: 1.6rem;
+  margin-bottom: 1rem;
+}
+.card-mvv {
+  display: flex;
+  gap: 1rem;
+  padding: 1rem;
+  margin-bottom: 0.8rem;
+  background: rgba(217, 202, 173, 0.3);
+  border-left: 3px solid #6b7334;
+  border-radius: 0.75rem;
+  align-items: flex-start;
+}
+.card-mvv div {
+  min-width: 0;
+}
+.card-mvv i {
+  font-size: 2rem;
+  color: #6b7334;
+}
+.card-mvv h3 {
+  font-size: 1.3rem;
+}
+.card-mvv p {
+  font-size: 1rem;
+  color: #70735d;
+}
+
+/*___________________________________________ */
+/* SEÇÃO 4: Depoimentos */
+.sessao4 {
+  margin-top: 2rem;
+}
+.titdepoimento {
+  font-size: 1.6rem;
+  margin-bottom: 1rem;
+}
+.card-depoimento {
+  display: none;
+  background: #fff;
+  border-radius: 0.5rem;
+  padding: 1rem;
+  text-align: center;
+  border: 1px solid #70735d;
+}
+.card-depoimento.ativo {
+  display: block;
+}
+.foto-cliente {
+  width: 4rem;
+  height: 4rem;
+  border-radius: 50%;
+}
+.sessao4 h3 {
+  font-size: 1.1rem;
+}
+.sessao4 p {
+  font-size: 1rem;
+}
+/* Indicadores do carrossel */
+.indicadores {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+.indicador {
+  width: 0.6rem;
+  height: 0.6rem;
+  border-radius: 50%;
+  background-color: #d9caad;
+}
+.indicador.ativo {
+  background-color: #6b7334;
+}
+
+/*___________________________________________ */
+/* SEÇÃO 5: Newsletter */
+.sessao5 {
+  background: rgba(217, 202, 173, 0.4);
+  margin-top: 3rem;
+  border-radius: 0.5rem;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1rem;
+}
+.sessao5 i {
+  font-size: 3rem;
+  color: #70735d;
+}
+.conteudo-newsletter {
+  width: 100%;
+}
+/* Grupo de entrada da Newsletter */
+.input-grupo {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-top: 0.75rem;
+}
+.input-grupo input,
+.input-grupo button {
+  width: 100%;
+}
+.input-grupo input {
+  padding: 0.6rem;
+  border: 1px solid #70735d;
+  border-radius: 0.5rem;
+}
+.input-grupo button {
+  font-size: 1rem;
+  padding: 0.6rem;
+  background: #d9a273;
+  color: #fff;
+  border: none;
+  border-radius: 1rem;
+  cursor: pointer;
+}
+
+/*___________________________________________ */
+/* SEÇÃO 6: CTA Final */
+.sessao6 {
+  background: #6b7334;
+  padding: 1.5rem;
+  margin-top: 2rem;
+  border-radius: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+.sessao6 img {
+  width: 100%;
+  max-width: 250px;
+  height: auto;
+}
+.sessao6 div {
+  max-width: 500px;
+}
+.sessao6 h2 {
+  color: #fff;
+  font-size: 1.5rem;
+}
+.sessao6 p {
+  color: #fff;
+  font-size: 1rem;
+}
+.sessao6 a {
+  display: inline-block;
+  font-size: 1rem;
+  padding: 0.7rem 1.3rem;
+  background: #d9a273;
+  color: #fff;
+  border-radius: 1rem;
+  text-decoration: none;
+  margin-top: 1rem;
+}
+
+/*___________________________________________ */
+/* RESPONSIVIDADE: Desktop */
+@media (min-width: 768px) {
+  html {
+    font-size: 20px;
+  }
+
+  body {
+    padding: 2rem 4rem;
+  }
+
+  .sessao2 div {
+    width: 50%;
+  }
+
+  .sessao5 {
+    flex-direction: row;
+    align-items: center;
+  }
+
+  .input-grupo {
+    flex-direction: row;
+  }
+
+  .input-grupo input {
+    flex: 1;
+    width: auto;
+  }
+
+  .input-grupo button {
+    width: auto;
+  }
+
+  .sessao6 {
+    flex-direction: row;
+    text-align: left;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+  }
+
+  .sessao6 img {
+    max-width: 350px;
+    height: 300px;
+    object-fit: cover;
+  }
+}

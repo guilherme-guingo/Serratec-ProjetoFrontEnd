@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SOBRE NÓS</title>
+
+    <!-- Fontes externas: Playfair Display e Inter -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Biblioteca de ícones: Bootstrap Icons -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css"
+    />
+
+    <!-- Arquivo de estilos personalizado -->
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <!-- Seção 01: Apresentação da marca e equipe -->
+    <section class="sessao1">
+      <p class="destaque">Sobre nossa empresa</p>
+      <h1>Do primeiro commit ao deploy do seu visual</h1>
+      <p class="descricao">
+        Somos cinco desenvolvedores que olharam no espelho entre um deploy e
+        outro e perceberam: faltava um produto para cada bug do dia. A DevCare
+        nasceu disso, cosméticos pensados por quem vive essa rotina!
+      </p>
+      <img
+        class="imgEquipe"
+        src="assets/imgEquipe.png"
+        alt="Equipe DEVCARE com 5 integrantes"
+      />
+    </section>
+
+    <!-- Seção 02: Indicadores e métricas da empresa -->
+    <section class="sessao2">
+      <div>
+        <i class="bi bi-people"></i>
+        <p class="dados">+5K</p>
+        <p>Clientes Satisfeitos</p>
+      </div>
+      <div>
+        <i class="bi bi-calendar-week"></i>
+        <p class="dados">+4</p>
+        <p>Anos de História</p>
+      </div>
+      <div>
+        <i class="bi bi-graph-up-arrow"></i>
+        <p class="dados">+12</p>
+        <p>Produtos Desenvolvidos</p>
+      </div>
+      <div>
+        <i class="bi bi-recycle"></i>
+        <p class="dados">100%</p>
+        <p>Embalagem Sustentável</p>
+      </div>
+    </section>
+
+    <!-- Seção 03: Missão, Visão e Valores (MVV) -->
+    <section class="sessao3">
+      <h2 class="titMVV">Nossa missão, visão e valores</h2>
+      <div class="card-mvv">
+        <i class="bi bi-bullseye"></i>
+        <div>
+          <h3>Missão</h3>
+          <p>
+            Criar cosméticos de alta performance para quem vive de código,
+            promovendo bem-estar e sustentabilidade.
+          </p>
+        </div>
+      </div>
+      <div class="card-mvv">
+        <i class="bi bi-eye"></i>
+        <div>
+          <h3>Visão</h3>
+          <p>
+            Ser referência em inovação e sustentabilidade para o público tech
+            até 2030.
+          </p>
+        </div>
+      </div>
+      <div class="card-mvv">
+        <i class="bi bi-heart"></i>
+        <div>
+          <h3>Valores</h3>
+          <p>Transparência • Ética • Respeito • Paixão pelo que fazemos</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Seção 04: Depoimentos e feedback de clientes -->
+    <section class="sessao4">
+      <h2 class="titdepoimento">O que dizem sobre nós...</h2>
+      <div class="carrossel">
+        <div class="card-depoimento ativo">
+          <img
+            class="foto-cliente"
+            src="assets/devOculos.png"
+            alt="Foto de Felipe Menegueli"
+          />
+          <h3>Felipe Menegueli</h3>
+          <p>O Shampoo Code Clean Lab transformou meu cabelo!</p>
+        </div>
+        <div class="card-depoimento">
+          <img
+            class="foto-cliente"
+            src="assets/devLoira.png"
+            alt="Foto de Lairana Ramalho"
+          />
+          <h3>Lairana Ramalho</h3>
+          <p>O Creme para Mãos git commit -m hydration é essencial!</p>
+        </div>
+        <div class="card-depoimento">
+          <img
+            class="foto-cliente"
+            src="assets/devAsiatico.png"
+            alt="Foto de Breno Magrani"
+          />
+          <h3>Breno Magrani</h3>
+          <p>O Spray Flexbox Spray salvou minhas manhãs.</p>
+        </div>
+      </div>
+      <div class="indicadores">
+        <span class="indicador ativo"></span>
+        <span class="indicador"></span>
+        <span class="indicador"></span>
+      </div>
+    </section>
+
+    <!-- Seção 05: Inscrição em Newsletter -->
+    <section class="sessao5">
+      <i class="bi bi-envelope-check"></i>
+      <div class="conteudo-newsletter">
+        <h2>Fique por dentro dos deploys!</h2>
+        <p>Receba lançamentos e ofertas exclusivas direto no seu e-mail.</p>
+        <div class="input-grupo">
+          <input type="email" placeholder="Digite seu E-mail" id="email" />
+          <button type="button">Cadastrar</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Seção 06: Chamada para ação (CTA) final -->
+    <section class="sessao6">
+      <img src="assets/ProdCTA.png" alt="Produtos da linha DEVCARE" />
+      <div>
+        <h2>Pronto para dar push no seu visual?</h2>
+        <p>Nossa linha completa está esperando pelo seu merge.</p>
+        <a href="catalogo.html">Produtos</a>
+      </div>
+    </section>
+
+    <!-- Scripts de JS-->
+    <script src="script.js"></script>
+  </body>
+</html>
