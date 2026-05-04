@@ -107,7 +107,14 @@ body {
 }
 
 .link-rodape {
+    color: #A0A0A0;
     font-size: 0.85rem;
+    transition: 0.3s;
+}
+
+.link-rodape {
+    color: #A0A0A0;
+    text-decoration: underline;
 }
 
 .logo-rodape {
@@ -172,8 +179,3 @@ body {
     margin-bottom: 1.5rem;
 }
 
-@media (max-width: 991px) {
-    body {
-        margin-bottom: 80px;
-    }
-}
