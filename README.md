@@ -42,11 +42,10 @@ Um navegador web atualizado (Google Chrome, Firefox, Safari ou Microsoft Edge)
 
 ## 👥 Contribuidores & Páginas
 
-
 Guilherme Fernandes Guingo - Login do Usuário
-José Ricardo de Mello - Carrinho de Compras
+José Ricardo Mello - Carrinho de Compras
 Liliane Costa da Silva - Sobre Nós
-Nícolas de Carvalho Oliveira - Home
-Patrick Nunes Pires Melo De Souza - Catálogo de Produtos
+Nícolas de Carvalho Oliveira - Home/Início
+Patrick Nunes Pires Melo de Souza - Catálogo de Produtos 
 
 
