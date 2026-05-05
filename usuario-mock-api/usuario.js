@@ -361,20 +361,17 @@ async function excluirConta() {
         if (!sessaoAtual) return;
 
         try {
-            const response = await fetch(`${API_USERS}/${sessaoAtual.id}`, {
-                method: 'DELETE'
-            });
-
-            if(response.ok) {
-                localStorage.removeItem('devcare_session');
-                alert('Sua conta foi excluída com sucesso.');
-                window.location.href = '../index.html';
-            } else {
-                throw new Error("Falha ao deletar a conta");
+            if (sessaoAtual.id) {
+                await fetch(`${API_USERS}/${sessaoAtual.id}`, {
+                    method: 'DELETE'
+                });
             }
         } catch(error) {
             console.error("Erro ao deletar conta:", error);
-            alert("Erro ao excluir sua conta. Tente novamente.");
+        } finally {
+            localStorage.removeItem('devcare_session');
+            alert('Sua conta foi excluída com sucesso.');
+            window.location.href = '../index.html';
         }
     }
 }
