@@ -123,13 +123,16 @@ function atualizarResumo() {
  * AÇÃO PRINCIPAL: Finaliza a compra ou exige login via Modal
  */
 async function finalizarCompra() {
-    // 1. Verificação de Login: Se não houver função de login ou não estiver logado
-    // Nota: 'estaLogado' deve ser uma função global no seu main.js
+    // 1. Verificação de Login
     if (typeof estaLogado === "function" && !estaLogado()) {
         const modalLogin = new bootstrap.Modal(document.getElementById('modalLoginObrigatorio'));
         modalLogin.show();
         return; 
     }
+
+    // 2. Recupera os dados do usuário logado
+    const sessaoAtual = JSON.parse(localStorage.getItem('devcare_session'));
+    if (!sessaoAtual) return;
 
     const itensCarrinho = document.querySelectorAll('.product-item');
     if (itensCarrinho.length === 0) return;
@@ -138,8 +141,14 @@ async function finalizarCompra() {
     botao.disabled = true;
     botao.innerText = "Processando...";
 
+    // 3. Monta o objeto do pedido incluindo os dados do usuário
     const pedido = {
         data: new Date().toLocaleString('pt-BR'),
+        cliente: {
+            nome: sessaoAtual.nome,
+            email: sessaoAtual.email,
+            id_usuario: sessaoAtual.id // Caso sua sessão tenha o ID do usuário
+        },
         itens: Array.from(itensCarrinho).map(item => ({
             id: item.dataset.id,
             nome: item.querySelector('.product-name').innerText,
@@ -158,26 +167,24 @@ async function finalizarCompra() {
         });
 
         if (response.ok) {
-            // Salva no histórico de compras do usuário logado
-            let sessaoAtual = JSON.parse(localStorage.getItem('devcare_session'));
-            if (sessaoAtual) {
-                if (!sessaoAtual.pedidos) sessaoAtual.pedidos = [];
-                sessaoAtual.pedidos.push(pedido);
-                localStorage.setItem('devcare_session', JSON.stringify(sessaoAtual));
+            // 4. Salva no histórico local do usuário
+            // Criamos ou atualizamos a lista de pedidos dentro da sessão
+            if (!sessaoAtual.pedidos) sessaoAtual.pedidos = [];
+            sessaoAtual.pedidos.push(pedido);
+            localStorage.setItem('devcare_session', JSON.stringify(sessaoAtual));
 
-                // Atualiza o banco de dados simulado
-                let usuarios = JSON.parse(localStorage.getItem('devcare_db_users')) || [];
-                const index = usuarios.findIndex(u => u.email === sessaoAtual.email);
-                if (index !== -1) {
-                    usuarios[index] = sessaoAtual;
-                    localStorage.setItem('devcare_db_users', JSON.stringify(usuarios));
-                }
+            // 5. Atualiza o "Banco de Dados" Global (db_users)
+            let usuarios = JSON.parse(localStorage.getItem('devcare_db_users')) || [];
+            const index = usuarios.findIndex(u => u.email === sessaoAtual.email);
+            if (index !== -1) {
+                usuarios[index].pedidos = sessaoAtual.pedidos;
+                localStorage.setItem('devcare_db_users', JSON.stringify(usuarios));
             }
 
-            // Limpa o localStorage após sucesso na API
+            // 6. Finalização e Limpeza
             localStorage.removeItem('devcare_items'); 
+            localStorage.setItem('devcare_cart_count', '0'); // Zera o contador global
             
-            // Exibe o modal de sucesso
             const modalSucesso = new bootstrap.Modal(document.getElementById('modalSucesso'));
             modalSucesso.show();
 
@@ -185,7 +192,10 @@ async function finalizarCompra() {
             if (listaProdutos) {
                 listaProdutos.innerHTML = '<p class="text-center my-5">Seu carrinho está vazio.</p>';
             }
+            
+            if (typeof atualizarBadgeNavbar === "function") atualizarBadgeNavbar();
             atualizarResumo(); 
+
         } else {
             throw new Error('Falha ao processar pedido');
         }
