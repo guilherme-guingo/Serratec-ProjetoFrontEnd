@@ -18,9 +18,54 @@
     />
 
     <!-- Arquivo de estilos personalizado -->
+     <link rel="stylesheet" href="../style.css" />
     <link rel="stylesheet" href="style.css" />
+  
   </head>
   <body>
+    <nav class="navbar navbar-expand-lg sticky-top"> <!--nav bar: Base da Bootstrap; 
+        navbar-expand-lg: Garante que a navbar fica na horizontal apenas em telas grandes;
+        sticky-top: Faz o cabeçalho não desaparecer ao rodas para baixo --> 
+        <div class="container">
+            <a class="navbar-brand" href="#"> <!--Tag a cria hiperlinks-->
+                <i class="fas fa-leaf me-2"></i>DEVCARE
+            </a>
+            <!--Menu mobile-->
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">  
+                <!--data-bs-toggle: Faz com que ao clicar no menu se abra outro menor-->
+                <!--Ícone do menu-->
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav"> <!--Colapse: permite esconder o menu-->
+                <ul class="navbar-nav mx-auto"> <!--navbar-nav: Cria a lista de navegação--> <!--mx-auto: Ajusta o poscionamento-->
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#">Início</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="./sobre-nos/index.html">Sobre Nós</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Produtos</a>
+                    </li>
+                </ul>
+                <!--Ícones de Usuário, Pesquisa e Compra-->
+                <div class="d-flex align-items-center gap-3">
+                    <!--PESQUISA-->
+                    <a href="#" class="text-dark">
+                        <i class="fas fa-search"></i>
+                    </a>
+                    <!--USUÁRIO-->
+                    <a href="usuario/dashboard.html" class="text-dark">
+                        <i class="far fa-user"></i>
+                    </a>
+                    <!--CARRINHO DE COMPRAS-->
+                    <a href="carrinho-compras/index.html" class="text-dark">
+                        <i class="fas fa-shopping-bag"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
     <!-- Seção 01: Apresentação da marca e equipe -->
     <section class="sessao1">
       <p class="destaque">Sobre nossa empresa</p>
