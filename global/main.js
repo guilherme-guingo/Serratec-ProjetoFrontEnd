@@ -8,7 +8,7 @@
 document.addEventListener('DOMContentLoaded', () => {
     // 1. Sempre que qualquer página carregar, sincroniza o ícone da navbar
     atualizarBadgeNavbar();
-    
+
     // 2. Opcional: Log para desenvolvedor validar o estado de login no console
     console.log("Status de Login:", estaLogado() ? "Conectado" : "Desconectado");
 });
@@ -18,7 +18,7 @@ document.addEventListener('DOMContentLoaded', () => {
  */
 function atualizarBadgeNavbar() {
     const contadorBadge = document.getElementById('cart-count');
-    
+
     // Recupera o dado salvo sob a chave 'devcare_cart_count'
     const totalSalvo = localStorage.getItem('devcare_cart_count');
 
@@ -75,11 +75,11 @@ function atualizarContadorGlobal() {
 
     // Busca os itens reais do carrinho
     const itens = JSON.parse(localStorage.getItem('devcare_items')) || [];
-    
+
     const totalItens = itens.reduce((acumulador, item) => {
         return acumulador + (parseInt(item.quantidade) || 0);
     }, 0);
-    
+
     // Sincroniza também a chave de contagem simples, se você a usar em outro lugar
     localStorage.setItem('devcare_cart_count', totalItens);
 
