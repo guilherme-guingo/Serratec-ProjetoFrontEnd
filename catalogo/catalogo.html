@@ -52,12 +52,17 @@
     
 
     <div class="header-produtos">
-        <img src="https://imagizer.imageshack.com/img924/2644/HWF4SA.png" alt="" class="banner">
+        <div>
+            <img src="https://imagizer.imageshack.com/img924/2644/HWF4SA.png" alt="" class="img-banner">
+        </div>
         <h1 class="titulo-catalogo">PRODUTOS</h1>
     </div>
 
     <div class="container-teste">
-        <div class="container-filtros">
+        <button id="btn-aparece-filtros" class="btn-aparece-filtros">
+            Filtros ▾
+        </button>
+        <aside class="container-filtros" id="menu-filtros">
             <h1>Filtros</h1>
             <div class="filtro">
                 <h6>Categoria</h6>
@@ -88,7 +93,7 @@
             </div>
             <button id="btn-filtro" class="btn-filtro">Aplicar filtros</button>
             <button id="btn-apagar" class="btn-apagar">Apagar filtros</button>
-        </div>
+        </aside>
         <div id="cata-produtos" class="catalogo-prod">
             
         </div>

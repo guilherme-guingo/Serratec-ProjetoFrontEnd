@@ -36,7 +36,7 @@ function renderizarDetalhes(produto){
         currency: 'BRL',
     });
     const precoBR = formatoMoeda.format(produto.preco)
-    containerDetalhes.innerHTML = `<img src="${produto.imagem}" alt="${produto.titulo}" class="img-produto">
+    containerDetalhes.innerHTML = `<div class="capsula-img"><img src="${produto.imagem}" alt="${produto.titulo}" class="img-produto"> </div>
         <div class="detalhes-produto">
             <h2>${produto.titulo}</h2>
             <p class="preco">${precoBR}</p>

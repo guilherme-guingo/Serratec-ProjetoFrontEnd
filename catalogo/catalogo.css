@@ -15,6 +15,10 @@ body{
     }
 }
 .container-filtros{
+    max-height: 0;
+    opacity: 0;
+    visibility: hidden;
+    overflow: hidden;
     display: flex;
     flex-direction: column;
     gap: 10px;
@@ -24,14 +28,34 @@ body{
     box-shadow: 0px 5px 10px rgba(139, 139, 139, 0.3);
     border-radius: 6px;
     margin-bottom: 10px;
+    transition: all 0.3s ease-in-out;
 
     @media (min-width: 768px){
+        max-height: 700px;
+        opacity: 1;
+        visibility: visible;
         position: sticky;
         height: fit-content;
         top: 80px;
         width: 40%;
     }
 }
+.container-filtros.ativo{
+    max-height: 700px;
+    opacity: 1;
+    visibility: visible;
+}
+
+.btn-aparece-filtros{
+    display: block;
+    border: none;
+    color:#333333;
+    border-radius: 6px;
+    @media (min-width: 768px){
+        display: none;
+    }
+}
+
 .filtro{
     display: flex;
     flex-direction: column;
@@ -160,13 +184,10 @@ body{
     overflow: hidden;
 }
 
-.banner{
+.img-banner{
     width: 220%;
-    transform: translateX(180px);
-    
     @media(min-width: 768px){
         width: 105%;
-        transform:translateX(0px);
     }
 }
 .comprar{

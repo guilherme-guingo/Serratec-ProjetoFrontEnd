@@ -1,8 +1,10 @@
 const catalogo = document.getElementById("cata-produtos")
 const btnFiltrar = document.getElementById("btn-filtro")
 const btnApagar = document.getElementById("btn-apagar")
+const btnVFiltros = document.getElementById("btn-aparece-filtros")
 const containerTipo = document.getElementById("filtros-tipo")
 const containerCategoria = document.getElementById("filtros-categoria")
+const menuFiltros = document.getElementById("menu-filtros")
 
 const url = "https://69f3d141bd2396bf531062ed.mockapi.io/produtos"
 
@@ -13,8 +15,7 @@ document.addEventListener("DOMContentLoaded", async function() {
     renderizarProdutos(produtos);
 });
 
-btnFiltrar.addEventListener('click', function(e){
-    e.preventDefault();
+btnFiltrar.addEventListener('click', function(){
     const {tipos, categorias } = filtros();
     filtrarProdutos(tipos, categorias);
 })
@@ -22,6 +23,10 @@ btnFiltrar.addEventListener('click', function(e){
 btnApagar.addEventListener('click', function(){
     containerTipo.reset();
     containerCategoria.reset();
+})
+
+btnVFiltros.addEventListener('click', function(){
+    menuFiltros.classList.toggle('ativo')
 })
 
 function filtros(){
