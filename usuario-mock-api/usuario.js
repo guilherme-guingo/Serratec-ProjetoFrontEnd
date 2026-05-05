@@ -1,6 +1,4 @@
-// ==========================================
-// CONTROLE DE INTERFACE (Telas e Abas)
-// ==========================================
+const API_USERS = "https://69f9fd8fc509a40d3aa3b0ea.mockapi.io/projetoFront/usuarios";
 
 function toggleAuth(type) {
     const formLogin = document.getElementById('form-login');
@@ -34,129 +32,139 @@ function showPanel(panelId, element) {
     element.classList.add('active');
 }
 
-// ==========================================
-// LÓGICA DE BANCO DE DADOS (LocalStorage)
-// ==========================================
-
-// Quando a página carregar, executa os scripts
 document.addEventListener('DOMContentLoaded', () => {
 
-    // 1. SISTEMA DE CADASTRO
+    const inputs = document.querySelectorAll('input, select, textarea');
+    inputs.forEach(input => {
+        input.addEventListener('invalid', function () {
+            if (this.validity.valueMissing) {
+                this.setCustomValidity('Por favor, preencha este campo.');
+            } else if (this.validity.typeMismatch && this.type === 'email') {
+                this.setCustomValidity('Por favor, insira um endereço de e-mail válido.');
+            } else if (this.validity.tooShort) {
+                this.setCustomValidity(`Este campo deve ter no mínimo ${this.getAttribute('minlength')} caracteres.`);
+            } else {
+                this.setCustomValidity('Valor inválido.');
+            }
+        });
+        input.addEventListener('input', function () {
+            this.setCustomValidity('');
+        });
+    });
+
     const formRegister = document.getElementById('form-register');
     if (formRegister) {
-        formRegister.addEventListener('submit', function (e) {
-            e.preventDefault(); // Evita recarregar a página
+        formRegister.addEventListener('submit', async function (e) {
+            e.preventDefault(); 
+            const btnSubmit = document.getElementById('btn-submit-register');
+            if(btnSubmit) { btnSubmit.disabled = true; btnSubmit.innerText = "Carregando..."; }
 
             const nome = document.getElementById('regNome').value;
             const email = document.getElementById('regEmail').value;
             const senha = document.getElementById('regSenha').value;
 
-            // Busca os usuários que já existem ou cria um array vazio
-            let usuarios = JSON.parse(localStorage.getItem('devcare_db_users')) || [];
-
-            // Verifica se o e-mail já existe
-            if (usuarios.some(user => user.email === email)) {
-                alert('Oops! Este e-mail já está cadastrado.');
+            if (senha.length < 6) {
+                alert('A senha deve ter no mínimo 6 caracteres.');
+                if(btnSubmit) { btnSubmit.disabled = false; btnSubmit.innerText = "Finalizar Cadastro"; }
                 return;
             }
 
-            // Cria o novo usuário e salva no "Banco"
-            const novoUsuario = { nome, email, senha };
-            usuarios.push(novoUsuario);
-            localStorage.setItem('devcare_db_users', JSON.stringify(usuarios));
+            try {
+                const checkResponse = await fetch(`${API_USERS}?email=${email}`);
+                const checkUsers = await checkResponse.json();
 
-            // Já faz o login automaticamente após cadastrar
-            localStorage.setItem('devcare_session', JSON.stringify(novoUsuario));
-            
-            alert('Cadastro realizado com sucesso! Bem-vindo(a) à DevCare.');
-            window.location.href = 'dashboard.html';
+                if (Array.isArray(checkUsers) && checkUsers.length > 0) {
+                    alert('Oops! Este e-mail já está cadastrado.');
+                    if(btnSubmit) { btnSubmit.disabled = false; btnSubmit.innerText = "Finalizar Cadastro"; }
+                    return;
+                }
+
+                const novoUsuario = { nome, email, senha, enderecos: [], pedidos: [] };
+                const response = await fetch(API_USERS, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(novoUsuario)
+                });
+
+                if (response.ok) {
+                    const usuarioCriado = await response.json();
+                    localStorage.setItem('devcare_session', JSON.stringify(usuarioCriado));
+                    alert('Cadastro realizado com sucesso! Bem-vindo(a) à DevCare.');
+                    window.location.href = 'dashboard.html';
+                } else {
+                    throw new Error("Falha ao criar conta.");
+                }
+            } catch (error) {
+                console.error("Erro no cadastro:", error);
+                alert("Erro ao conectar ao servidor. Tente novamente mais tarde.");
+                if(btnSubmit) { btnSubmit.disabled = false; btnSubmit.innerText = "Finalizar Cadastro"; }
+            }
         });
     }
 
-    // 2. SISTEMA DE LOGIN
     const formLogin = document.getElementById('form-login');
     if (formLogin) {
-        formLogin.addEventListener('submit', function (e) {
+        formLogin.addEventListener('submit', async function (e) {
             e.preventDefault();
+            const btnSubmit = document.getElementById('btn-submit-login');
+            if(btnSubmit) { btnSubmit.disabled = true; btnSubmit.innerText = "Carregando..."; }
 
             const email = document.getElementById('loginEmail').value;
             const senha = document.getElementById('loginSenha').value;
 
-            // Busca a lista de usuários no banco
-            let usuarios = JSON.parse(localStorage.getItem('devcare_db_users')) || [];
+            try {
+                const response = await fetch(`${API_USERS}?email=${email}`);
+                if (!response.ok) {
+                     alert('E-mail ou senha incorretos! Tente novamente.');
+                     if(btnSubmit) { btnSubmit.disabled = false; btnSubmit.innerText = "Entrar na minha conta"; }
+                     return;
+                }
 
-            // Tenta achar um usuário com o mesmo e-mail e senha
-            const usuarioLogado = usuarios.find(user => user.email === email && user.senha === senha);
+                const usuarios = await response.json();
+                
+                if (!Array.isArray(usuarios) || usuarios.length === 0) {
+                    alert('E-mail ou senha incorretos! Tente novamente.');
+                    if(btnSubmit) { btnSubmit.disabled = false; btnSubmit.innerText = "Entrar na minha conta"; }
+                    return;
+                }
 
-            if (usuarioLogado) {
-                // Cria a sessão e manda pro painel
-                localStorage.setItem('devcare_session', JSON.stringify(usuarioLogado));
-                window.location.href = 'dashboard.html';
-            } else {
-                alert('E-mail ou senha incorretos! Tente novamente.');
+                const usuarioLogado = usuarios.find(user => user.email === email && user.senha === senha);
+
+                if (usuarioLogado) {
+                    localStorage.setItem('devcare_session', JSON.stringify(usuarioLogado));
+                    window.location.href = 'dashboard.html';
+                } else {
+                    alert('E-mail ou senha incorretos! Tente novamente.');
+                    if(btnSubmit) { btnSubmit.disabled = false; btnSubmit.innerText = "Entrar na minha conta"; }
+                }
+            } catch (error) {
+                console.error("Erro no login:", error);
+                alert("Erro ao conectar ao servidor. Tente novamente mais tarde.");
+                if(btnSubmit) { btnSubmit.disabled = false; btnSubmit.innerText = "Entrar na minha conta"; }
             }
         });
     }
 
-    // 3. PROTEÇÃO E DADOS DO PAINEL (Dashboard)
-    // Verifica se estamos na página dashboard.html
     if (window.location.pathname.includes('dashboard.html')) {
         
-        // Busca quem está logado
-        const sessaoAtual = JSON.parse(localStorage.getItem('devcare_session'));
+        let sessaoAtual = JSON.parse(localStorage.getItem('devcare_session'));
 
-        // Se não tiver ninguém logado, expulsa para o Login
         if (!sessaoAtual) {
             alert('Você precisa fazer login para acessar esta página.');
             window.location.href = 'auth.html';
         } else {
-            // Se estiver logado, injeta os dados na tela
-            // Pega só o primeiro nome
-            const primeiroNome = sessaoAtual.nome.split(' ')[0]; 
-
-            document.getElementById('user-display-name').textContent = `Olá, ${primeiroNome}!`;
-            document.getElementById('user-display-email').textContent = sessaoAtual.email;
-
-            document.getElementById('user-input-nome').value = sessaoAtual.nome || '';
-            document.getElementById('user-input-email').value = sessaoAtual.email || '';
-            const cpfInput = document.getElementById('user-input-cpf');
-            const telInput = document.getElementById('user-input-telefone');
-            
-            cpfInput.value = sessaoAtual.cpf || '';
-            telInput.value = sessaoAtual.telefone || '';
-
-            if (cpfInput) {
-                cpfInput.addEventListener('input', function() {
-                    let value = this.value.replace(/\D/g, "");
-                    if (value.length > 11) value = value.slice(0, 11);
-                    value = value.replace(/(\d{3})(\d)/, "$1.$2");
-                    value = value.replace(/(\d{3})(\d)/, "$1.$2");
-                    value = value.replace(/(\d{3})(\d{1,2})$/, "$1-$2");
-                    this.value = value;
-                });
-                if(cpfInput.value) cpfInput.dispatchEvent(new Event('input'));
-            }
-
-            if (telInput) {
-                telInput.addEventListener('input', function() {
-                    let value = this.value.replace(/\D/g, "");
-                    if (value.length > 11) value = value.slice(0, 11);
-                    value = value.replace(/^(\d{2})(\d)/g, "($1) $2");
-                    value = value.replace(/(\d)(\d{4})$/, "$1-$2");
-                    this.value = value;
-                });
-                if(telInput.value) telInput.dispatchEvent(new Event('input'));
-            }
-
-            renderizarEnderecos();
-            renderizarHistorico();
+            sincronizarSessao(sessaoAtual.id).then((dadosAtualizados) => {
+                if(dadosAtualizados) {
+                    sessaoAtual = dadosAtualizados;
+                    localStorage.setItem('devcare_session', JSON.stringify(sessaoAtual));
+                }
+                inicializarDashboard(sessaoAtual);
+            });
         }
     }
 
-    // 4. MODAL FORM DE ENDEREÇOS E VIACEP
     const formEndereco = document.getElementById('form-endereco');
     if (formEndereco) {
-        
         const cepInput = document.getElementById('end-cep');
         const numeroInput = document.getElementById('end-numero');
 
@@ -194,10 +202,9 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }
 
-        formEndereco.addEventListener('submit', (e) => {
+        formEndereco.addEventListener('submit', async (e) => {
             e.preventDefault();
             
-            // Validações
             const cepDigitado = document.getElementById('end-cep').value;
             const ufDigitada = document.getElementById('end-uf').value;
             const numeroDigitado = document.getElementById('end-numero').value;
@@ -238,44 +245,160 @@ document.addEventListener('DOMContentLoaded', () => {
                 sessaoAtual.enderecos[index] = novoEnd;
             }
 
-            atualizarSessaoEUsuarios(sessaoAtual);
-            
-            // Fecha modal
-            const modalEl = document.getElementById('modalEndereco');
-            const modalInst = bootstrap.Modal.getInstance(modalEl) || new bootstrap.Modal(modalEl);
-            if (modalInst) modalInst.hide();
-            
-            renderizarEnderecos();
+            const sucesso = await salvarAlteracoesAPI(sessaoAtual);
+            if(sucesso) {
+                const modalEl = document.getElementById('modalEndereco');
+                const modalInst = bootstrap.Modal.getInstance(modalEl) || new bootstrap.Modal(modalEl);
+                if (modalInst) modalInst.hide();
+                renderizarEnderecos();
+            } else {
+                alert("Erro ao salvar endereço no servidor.");
+            }
         });
     }
 });
 
-// 5. SISTEMA DE LOGOUT E EXCLUSÃO DE CONTA
+async function sincronizarSessao(id) {
+    try {
+        const response = await fetch(`${API_USERS}/${id}`);
+        if(response.ok) {
+            return await response.json();
+        }
+    } catch(e) {
+        console.error("Erro na sincronização:", e);
+    }
+    return null;
+}
+
+function inicializarDashboard(sessaoAtual) {
+    const primeiroNome = sessaoAtual.nome ? sessaoAtual.nome.split(' ')[0] : 'Usuário'; 
+
+    document.getElementById('user-display-name').textContent = `Olá, ${primeiroNome}!`;
+    document.getElementById('user-display-email').textContent = sessaoAtual.email;
+
+    document.getElementById('user-input-nome').value = sessaoAtual.nome || '';
+    document.getElementById('user-input-email').value = sessaoAtual.email || '';
+    const cpfInput = document.getElementById('user-input-cpf');
+    const telInput = document.getElementById('user-input-telefone');
+    
+    cpfInput.value = sessaoAtual.cpf || '';
+    telInput.value = sessaoAtual.telefone || '';
+
+    if (cpfInput) {
+        cpfInput.addEventListener('input', function() {
+            let value = this.value.replace(/\D/g, "");
+            if (value.length > 11) value = value.slice(0, 11);
+            value = value.replace(/(\d{3})(\d)/, "$1.$2");
+            value = value.replace(/(\d{3})(\d)/, "$1.$2");
+            value = value.replace(/(\d{3})(\d{1,2})$/, "$1-$2");
+            this.value = value;
+        });
+        if(cpfInput.value) cpfInput.dispatchEvent(new Event('input'));
+    }
+
+    if (telInput) {
+        telInput.addEventListener('input', function() {
+            let value = this.value.replace(/\D/g, "");
+            if (value.length > 11) value = value.slice(0, 11);
+            value = value.replace(/^(\d{2})(\d)/g, "($1) $2");
+            value = value.replace(/(\d)(\d{4})$/, "$1-$2");
+            this.value = value;
+        });
+        if(telInput.value) telInput.dispatchEvent(new Event('input'));
+    }
+
+    renderizarEnderecos();
+    renderizarHistorico();
+
+    const formAlterarSenha = document.getElementById('form-alterar-senha');
+    if (formAlterarSenha) {
+        formAlterarSenha.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const senhaAtual = document.getElementById('senha-atual').value;
+            const novaSenha = document.getElementById('senha-nova').value;
+            const novaSenhaConfirma = document.getElementById('senha-nova-confirma').value;
+
+            let sessao = JSON.parse(localStorage.getItem('devcare_session'));
+            if (!sessao) return;
+
+            if (senhaAtual !== sessao.senha) {
+                alert('A senha atual está incorreta.');
+                return;
+            }
+
+            if (novaSenha !== novaSenhaConfirma) {
+                alert('A nova senha e a confirmação não coincidem.');
+                return;
+            }
+
+            if (novaSenha.length < 6) {
+                alert('A nova senha deve ter no mínimo 6 caracteres.');
+                return;
+            }
+
+            sessao.senha = novaSenha;
+            const sucesso = await salvarAlteracoesAPI(sessao);
+            if(sucesso){
+                alert('Senha alterada com sucesso!');
+                formAlterarSenha.reset();
+            } else {
+                alert('Erro ao atualizar a senha no servidor.');
+            }
+        });
+    }
+}
+
 function fazerLogout() {
-    // Confirma se o usuário quer mesmo sair
     if(confirm('Tem certeza que deseja sair da sua conta?')) {
-        // Apaga a sessão e volta pra Home
         localStorage.removeItem('devcare_session');
         window.location.href = '../index.html';
     }
 }
 
-function excluirConta() {
+async function excluirConta() {
     if(confirm('Tem certeza que deseja EXCLUIR sua conta DE FORMA PERMANENTE? Esta ação não pode ser desfeita.')) {
         let sessaoAtual = JSON.parse(localStorage.getItem('devcare_session'));
-        if (sessaoAtual) {
-            let usuarios = JSON.parse(localStorage.getItem('devcare_db_users')) || [];
-            usuarios = usuarios.filter(u => u.email !== sessaoAtual.email);
-            localStorage.setItem('devcare_db_users', JSON.stringify(usuarios));
+        if (!sessaoAtual) return;
+
+        try {
+            const response = await fetch(`${API_USERS}/${sessaoAtual.id}`, {
+                method: 'DELETE'
+            });
+
+            if(response.ok) {
+                localStorage.removeItem('devcare_session');
+                alert('Sua conta foi excluída com sucesso.');
+                window.location.href = '../index.html';
+            } else {
+                throw new Error("Falha ao deletar a conta");
+            }
+        } catch(error) {
+            console.error("Erro ao deletar conta:", error);
+            alert("Erro ao excluir sua conta. Tente novamente.");
         }
-        localStorage.removeItem('devcare_session');
-        alert('Sua conta foi excluída com sucesso.');
-        window.location.href = '../index.html';
     }
 }
 
-// 6. FUNÇÕES DE DADOS E ENDEREÇOS
-function salvarDadosPerfil() {
+async function salvarAlteracoesAPI(sessaoAtual) {
+    try {
+        const response = await fetch(`${API_USERS}/${sessaoAtual.id}`, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(sessaoAtual)
+        });
+
+        if(response.ok) {
+            const dadosAtualizados = await response.json();
+            localStorage.setItem('devcare_session', JSON.stringify(dadosAtualizados));
+            return true;
+        }
+    } catch(error) {
+        console.error("Erro na API (PUT):", error);
+    }
+    return false;
+}
+
+async function salvarDadosPerfil() {
     let sessaoAtual = JSON.parse(localStorage.getItem('devcare_session'));
     if (!sessaoAtual) return;
 
@@ -283,21 +406,13 @@ function salvarDadosPerfil() {
     sessaoAtual.cpf = document.getElementById('user-input-cpf').value;
     sessaoAtual.telefone = document.getElementById('user-input-telefone').value;
 
-    atualizarSessaoEUsuarios(sessaoAtual);
-    alert('Dados atualizados com sucesso!');
+    const sucesso = await salvarAlteracoesAPI(sessaoAtual);
     
-    // Atualiza o display nome
-    document.getElementById('user-display-name').textContent = `Olá, ${sessaoAtual.nome.split(' ')[0]}!`;
-}
-
-function atualizarSessaoEUsuarios(sessaoAtual) {
-    localStorage.setItem('devcare_session', JSON.stringify(sessaoAtual));
-    
-    let usuarios = JSON.parse(localStorage.getItem('devcare_db_users')) || [];
-    const index = usuarios.findIndex(u => u.email === sessaoAtual.email);
-    if (index !== -1) {
-        usuarios[index] = sessaoAtual;
-        localStorage.setItem('devcare_db_users', JSON.stringify(usuarios));
+    if(sucesso) {
+        alert('Dados atualizados com sucesso!');
+        document.getElementById('user-display-name').textContent = `Olá, ${sessaoAtual.nome.split(' ')[0]}!`;
+    } else {
+        alert('Erro ao atualizar os dados no servidor.');
     }
 }
 
@@ -361,15 +476,20 @@ function abrirModalEndereco(index = -1) {
     modal.show();
 }
 
-function removerEndereco(index) {
+async function removerEndereco(index) {
     if (!confirm('Deseja realmente remover este endereço?')) return;
     
     let sessaoAtual = JSON.parse(localStorage.getItem('devcare_session'));
     if (!sessaoAtual || !sessaoAtual.enderecos) return;
     
     sessaoAtual.enderecos.splice(index, 1);
-    atualizarSessaoEUsuarios(sessaoAtual);
-    renderizarEnderecos();
+    
+    const sucesso = await salvarAlteracoesAPI(sessaoAtual);
+    if(sucesso) {
+        renderizarEnderecos();
+    } else {
+        alert("Erro ao remover endereço do servidor.");
+    }
 }
 
 function renderizarHistorico() {
@@ -391,17 +511,25 @@ function renderizarHistorico() {
 
     pedidosReversos.forEach((pedido, i) => {
         const numPedido = pedidos.length - i; 
-        const totalHtml = pedido.total.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
         
+        let totalDisplay = pedido.total;
+        if (typeof pedido.total === 'number') {
+            totalDisplay = pedido.total.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+        }
+
         let itensResumo = pedido.itens.map(item => `${item.quantidade}x ${item.nome}`).join(', ');
         if (itensResumo.length > 80) itensResumo = itensResumo.substring(0, 80) + '...';
 
-        let itensDetalhadosHtml = pedido.itens.map(item => `
+        let itensDetalhadosHtml = pedido.itens.map(item => {
+            const itemTotal = (parseFloat(item.preco) * parseInt(item.quantidade));
+            const itemTotalDisplay = !isNaN(itemTotal) ? itemTotal.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }) : '';
+            return `
             <div class="d-flex justify-content-between small border-bottom py-1 border-opacity-25">
                 <span>${item.quantidade}x ${item.nome}</span>
-                <span class="text-muted">${(item.preco * item.quantidade).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</span>
+                <span class="text-muted">${itemTotalDisplay}</span>
             </div>
-        `).join('');
+            `;
+        }).join('');
 
         lista.innerHTML += `
         <div class="card p-3 border-primary-green mb-3 history-card position-relative overflow-hidden">
@@ -412,7 +540,7 @@ function renderizarHistorico() {
                     <p class="mb-0 text-muted small mt-1 history-card-summary"><strong>Itens:</strong> ${itensResumo}</p>
                 </div>
                 <div class="text-md-end mt-2 mt-md-0">
-                    <h5 class="fw-bold text-devcare mb-0">${totalHtml}</h5>
+                    <h5 class="fw-bold text-devcare mb-0">${totalDisplay}</h5>
                 </div>
             </div>
             

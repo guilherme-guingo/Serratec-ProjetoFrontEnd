@@ -1,8 +1,3 @@
-/* =========================================
-   ÁREA DO USUÁRIO (LOGIN, CADASTRO, PAINEL)
-   ========================================= */
-
-/* Inputs padronizados */
 .input-devcare {
     border: 1px solid #D1D1D1;
     border-radius: 8px;
@@ -15,7 +10,6 @@
     background-color: #FFFFFF;
 }
 
-/* Botões Principais da Marca */
 .btn-devcare {
     background-color: var(--primary-green);
     color: #FFFFFF;
@@ -29,7 +23,6 @@
     color: #FFFFFF;
 }
 
-/* Toggle Tabs do Login/Cadastro */
 .auth-tabs .nav-link {
     color: var(--text-dark);
     font-weight: 600;
@@ -42,7 +35,6 @@
     color: #FFFFFF;
 }
 
-/* Menu Lateral do Painel */
 .menu-dashboard {
     border: none;
     border-radius: 12px;
@@ -67,7 +59,6 @@
     color: #FFFFFF;
 }
 
-/* Avatar do usuário logado */
 .avatar-circle {
     width: 70px;
     height: 70px;
@@ -78,12 +69,10 @@
     justify-content: center;
 }
 
-/* Borda para destacar endereço principal */
 .border-primary-green {
     border-left: 4px solid var(--primary-green) !important;
 }
 
-/* Efeito Hover do Histórico de Compras */
 .history-card {
     transition: all 0.3s ease;
     cursor: default;
