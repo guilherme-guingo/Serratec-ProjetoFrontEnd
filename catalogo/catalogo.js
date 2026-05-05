@@ -8,13 +8,14 @@ const menuFiltros = document.getElementById("menu-filtros")
 
 const url = "https://69f3d141bd2396bf531062ed.mockapi.io/produtos"
 
-
+// carrega todos os produtos ao entrar na página
 document.addEventListener("DOMContentLoaded", async function() {
     const produtos = await carregarProdutos(url);
     salvarProdutos('produtos', produtos)
     renderizarProdutos(produtos);
 });
 
+//listeners para botões do menu de filtros
 btnFiltrar.addEventListener('click', function(){
     const {tipos, categorias } = filtros();
     filtrarProdutos(tipos, categorias);
@@ -23,12 +24,15 @@ btnFiltrar.addEventListener('click', function(){
 btnApagar.addEventListener('click', function(){
     containerTipo.reset();
     containerCategoria.reset();
+    const produtos = getProdutos('produtos')
+    renderizarProdutos(produtos)
 })
 
 btnVFiltros.addEventListener('click', function(){
     menuFiltros.classList.toggle('ativo')
 })
 
+//função que pega todos os checkbox selecionados e retorna uma lista com todos os valores
 function filtros(){
     const tiposSelecionados = containerTipo.querySelectorAll('input[type="checkbox"]:checked');
     const listaTipos = Array.from(tiposSelecionados).map(tp => tp.value);
@@ -42,6 +46,8 @@ function filtros(){
     };
 } 
 
+//função que recebe as listas das categorias e tipos desejados, 
+//faz o filtro e chama a função pra renderizar os produtos filtrados
 function filtrarProdutos(tipos, categorias){
     const produtos = getProdutos('produtos');
     console.log(produtos);
@@ -55,6 +61,7 @@ function filtrarProdutos(tipos, categorias){
     console.log(produtosFiltrados);
     renderizarProdutos(produtosFiltrados);
 }
+
 
 function salvarProdutos(key, value){
     localStorage.setItem(key, JSON.stringify(value));
@@ -71,6 +78,7 @@ function getProdutos(key){
     }
 }
 
+//cria cards para os produtos dentro do container de produto
 function renderizarProdutos(produtos) {
     const formatoMoeda = new Intl.NumberFormat('pt-BR', {
         style: 'currency',
@@ -105,6 +113,7 @@ function renderizarProdutos(produtos) {
     });
 }
 
+// faz um get na api e retorna todos os produtos 
 async function carregarProdutos(url){
     try{
         const response = await fetch(url)
