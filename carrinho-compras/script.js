@@ -133,6 +133,22 @@ async function finalizarCompra() {
         });
 
         if (response.ok) {
+            // Salva no histórico de compras do usuário logado
+            let sessaoAtual = JSON.parse(localStorage.getItem('devcare_session'));
+            if (sessaoAtual) {
+                if (!sessaoAtual.pedidos) sessaoAtual.pedidos = [];
+                sessaoAtual.pedidos.push(pedido);
+                localStorage.setItem('devcare_session', JSON.stringify(sessaoAtual));
+
+                // Atualiza o banco de dados simulado
+                let usuarios = JSON.parse(localStorage.getItem('devcare_db_users')) || [];
+                const index = usuarios.findIndex(u => u.email === sessaoAtual.email);
+                if (index !== -1) {
+                    usuarios[index] = sessaoAtual;
+                    localStorage.setItem('devcare_db_users', JSON.stringify(usuarios));
+                }
+            }
+
             // Limpa o localStorage após sucesso na API
             localStorage.removeItem('devcare_items'); 
             
@@ -228,5 +244,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const btnFinalizar = document.querySelector('.btn-finalize');
     if (btnFinalizar) {
         btnFinalizar.addEventListener('click', finalizarCompra);
+    }
+
+    if (typeof estaLogado === "function" && estaLogado()) {
+        const loginPrompt = document.getElementById('login-prompt-cart');
+        if (loginPrompt) {
+            loginPrompt.style.display = 'none';
+        }
     }
 });

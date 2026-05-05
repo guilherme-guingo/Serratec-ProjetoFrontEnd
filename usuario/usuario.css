@@ -82,3 +82,43 @@
 .border-primary-green {
     border-left: 4px solid var(--primary-green) !important;
 }
+
+/* Efeito Hover do Histórico de Compras */
+.history-card {
+    transition: all 0.3s ease;
+    cursor: default;
+}
+
+.history-card-details {
+    max-height: 0;
+    opacity: 0;
+    margin-top: 0 !important;
+    padding-top: 0 !important;
+    border-top: none !important;
+    transition: all 0.4s ease;
+    overflow: hidden;
+}
+
+.history-card:hover {
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    transform: translateY(-2px);
+}
+
+.history-card:hover .history-card-details {
+    max-height: 500px;
+    opacity: 1;
+    margin-top: 1rem !important;
+    padding-top: 1rem !important;
+    border-top: 1px solid #dee2e6 !important;
+}
+
+.history-card-summary {
+    transition: opacity 0.2s ease;
+}
+
+.history-card:hover .history-card-summary {
+    opacity: 0;
+    height: 0;
+    margin: 0 !important;
+    overflow: hidden;
+}

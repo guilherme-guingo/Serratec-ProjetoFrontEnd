@@ -47,11 +47,10 @@ function sincronizarCarrinho(quantidadeTotal) {
  */
 
 /**
- * Verifica se o usuário está logado.
- * Retorna true se a chave 'devcare_logado' for exatamente 'true'.
+ * Verifica se o usuário está logado usando a sessão real de usuario.js.
  */
 function estaLogado() {
-    return localStorage.getItem('devcare_logado') === 'true';
+    return localStorage.getItem('devcare_session') !== null;
 }
 
 /**
