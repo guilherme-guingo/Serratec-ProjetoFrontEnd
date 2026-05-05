@@ -2,50 +2,50 @@
 O DevCare é um website de e-commerce Front-end focado na comercialização de produtos de beleza e cuidados pessoais desenvolvido especialmente para o público da tecnologia. O projeto une o universo do desenvolvimento de software ao bem-estar, trazendo uma experiência moderna e pensada para quem passa horas na frente das telas.
 
 ## 📋 Índice
-Sobre o Projeto
+* Sobre o Projeto
 
-Tecnologias Utilizadas
+* Tecnologias Utilizadas
 
-Principais Funcionalidades
+* Principais Funcionalidades
 
-Pré-requisitos
+* Pré-requisitos
 
-Contribuidores
+* Contribuidores
 
 
-##💡 Sobre o Projeto
-Profissionais da tecnologia costumam enfrentar longas rotinas de trabalho sedentário, exposição constante à luz azul das telas e altos níveis de estresse. O DevCare nasce com o propósito de facilitar o acesso a cosméticos e produtos de autocuidado (skin care, protetores contra luz azul, hidratantes e cuidados corporais) por meio de uma linguagem e identidade visual totalmente integradas à cultura dev.
+## 💡 Sobre o Projeto
+Profissionais da tecnologia costumam enfrentar longas rotinas de trabalho sedentário, exposição constante à luz azul das telas e altos níveis de estresse. O DevCare nasce com o propósito de facilitar o acesso a cosméticos e produtos de autocuidado (skin care, hidratantes e cuidados corporais) por meio de uma linguagem e identidade visual totalmente integradas à cultura dev.
 
 ## 🛠 Tecnologias Utilizadas
 As seguintes tecnologias e ferramentas foram utilizadas na construção da interface:
 
-Linguagens: HTML5, CSS3, JavaScript
+* Linguagens: HTML5, CSS3, JavaScript
 
-Estilização: CSS estruturado com variáveis para suporte a temas.
+* Estilização: CSS estruturado com variáveis para suporte a temas.
 
-Versionamento: Git e GitHub
+* Versionamento: Git e GitHub
 
 ## ✨ Principais Funcionalidades
 
-Catálogo Temático: Exibição de produtos de cuidados com nomes e conceitos criativos focados no universo de TI.
+* Catálogo Temático: Exibição de produtos de cuidados com nomes e conceitos criativos focados no universo de TI.
 
-Carrinho de Compras Dinâmico: Fluxo interativo de adição, remoção de itens e atualização de valores em tempo real usando JavaScript.
+* Carrinho de Compras Dinâmico: Fluxo interativo de adição, remoção de itens e atualização de valores em tempo real usando JavaScript.
 
-Design Totalmente Responsivo: Interface fluida adaptada tanto para monitores ultrawide quanto para telas de smartphones.
+* Design Totalmente Responsivo: Interface fluida adaptada tanto para monitores ultrawide quanto para telas de smartphones.
 
 ## ⚙️ Pré-requisitos
 Para rodar a interface localmente, você precisa apenas de:
 
-Git (opcional, para clonar o projeto)
+* Git (opcional, para clonar o projeto)
 
-Um navegador web atualizado (Google Chrome, Firefox, Safari ou Microsoft Edge)
+* Um navegador web atualizado (Google Chrome, Firefox, Safari ou Microsoft Edge)
 
 ## 👥 Contribuidores & Páginas
 
-Guilherme Fernandes Guingo - Login do Usuário
-José Ricardo Mello - Carrinho de Compras
-Liliane Costa da Silva - Sobre Nós
-Nícolas de Carvalho Oliveira - Home/Início
-Patrick Nunes Pires Melo de Souza - Catálogo de Produtos 
+* **Guilherme Fernandes Guingo** – Login do Usuário
+* **José Ricardo Mello** – Carrinho de Compras
+* **Liliane Costa da Silva** – Sobre Nós
+* **Nícolas de Carvalho Oliveira** – Home / Início
+* **Patrick Nunes Pires Melo de Souza** – Catálogo de Produtos
 
 
