@@ -3,16 +3,23 @@ body{
 }
 .container-detalhes{
     display: flex;
-    justify-content: space-evenly;
-    margin-top: 100px;
+    flex-direction: column;
     margin-bottom: 100px;
+    @media (min-width: 768px){
+        flex-direction: row;
+        justify-content: space-evenly; 
+        margin-top: 100px;
+    }
 }
 .detalhes-produto{
-    width: 30%;
     display: flex;
     flex-direction: column;
+    justify-content: center;
     gap: 20px;
     padding: 20px;
+    @media (min-width: 768px){
+        width: 30%;
+    }
 }
 .preco{
     font-size: 1.5em;
@@ -29,6 +36,17 @@ body{
     border: 1px solid black;
     color: black;
 }
+.capsula-img{
+    width: 100%;
+    overflow: hidden;
+    height: 300px;
+    @media(min-width: 768px){
+        width: 500px;
+        height: auto;
+    }
+}
 .img-produto{
-    width: 500px;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 }
