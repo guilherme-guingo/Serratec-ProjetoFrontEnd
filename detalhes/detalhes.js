@@ -1,3 +1,4 @@
+//URLSearchParams "pega" os parâmetros que se cria na url
 const urlParametro = new URLSearchParams(window.location.search);
 const produtoId = urlParametro.get('id');
 const containerDetalhes = document.getElementById("container-detalhes");
@@ -8,7 +9,7 @@ document.addEventListener("DOMContentLoaded", async function() {
     renderizarDetalhes(produto)
 });
 
-
+// função que recebe a url e a id do produto e faz um get na api, retornando apenas o produto especifico
 async function carregarProduto(url, id) {
     if (!id) {
         console.log("ID do produto não fornecido");
@@ -31,7 +32,7 @@ async function carregarProduto(url, id) {
     }
 }
 
-
+// recebe o produto específico e cria o html com os dados
 function renderizarDetalhes(produto){
     
     const produtoString = JSON.stringify(produto).replace(/'/g, "&apos;");
