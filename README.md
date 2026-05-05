@@ -1,6 +1,6 @@
 # 🚀 DevCare – Beleza e Cuidados para Programadores
 
-**🌐 Deploy:** [Acessar o projeto online (Netlify)](https://harmonious-otter-8273df.netlify.app/)
+**🌐 Deploy:** [Acessar o projeto online (Netlify)](https://stellar-truffle-1dd6e4.netlify.app/)
 
 O DevCare é um website de e-commerce Front-end focado na comercialização de produtos de beleza e cuidados pessoais desenvolvido especialmente para o público da tecnologia. O projeto une o universo do desenvolvimento de software ao bem-estar, trazendo uma experiência moderna e pensada para quem passa horas na frente das telas.
 
