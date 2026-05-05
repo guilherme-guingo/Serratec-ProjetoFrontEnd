@@ -161,6 +161,15 @@ document.addEventListener('DOMContentLoaded', () => {
                 inicializarDashboard(sessaoAtual);
             });
         }
+
+        window.addEventListener('pageshow', function(event) {
+            if (event.persisted) {
+                let sessaoValidacao = JSON.parse(localStorage.getItem('devcare_session'));
+                if (!sessaoValidacao) {
+                    window.location.replace('auth.html');
+                }
+            }
+        });
     }
 
     const formEndereco = document.getElementById('form-endereco');
@@ -351,7 +360,7 @@ function inicializarDashboard(sessaoAtual) {
 function fazerLogout() {
     if(confirm('Tem certeza que deseja sair da sua conta?')) {
         localStorage.removeItem('devcare_session');
-        window.location.href = '../index.html';
+        window.location.replace('../index.html');
     }
 }
 
@@ -371,7 +380,7 @@ async function excluirConta() {
         } finally {
             localStorage.removeItem('devcare_session');
             alert('Sua conta foi excluída com sucesso.');
-            window.location.href = '../index.html';
+            window.location.replace('../index.html');
         }
     }
 }

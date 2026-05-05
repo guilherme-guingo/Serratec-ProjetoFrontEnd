@@ -6,8 +6,6 @@
  */
 
 document.addEventListener('DOMContentLoaded', () => {
-    window.alert = function(msg) { console.log('MOCKED ALERT:', msg); };
-    window.confirm = function(msg) { console.log('MOCKED CONFIRM:', msg); return true; };
     // 1. Sempre que qualquer página carregar, sincroniza o ícone da navbar
     atualizarBadgeNavbar();
 
