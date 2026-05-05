@@ -150,7 +150,7 @@ document.addEventListener('DOMContentLoaded', () => {
         let sessaoAtual = JSON.parse(localStorage.getItem('devcare_session'));
 
         if (!sessaoAtual) {
-            alert('Você precisa fazer login para acessar esta página.');
+            //alert('Você precisa fazer login para acessar esta página.');
             window.location.href = 'auth.html';
         } else {
             sincronizarSessao(sessaoAtual.id).then((dadosAtualizados) => {
