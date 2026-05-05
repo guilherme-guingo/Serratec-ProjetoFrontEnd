@@ -66,27 +66,34 @@ function getProdutos(key){
     }
 }
 
-function renderizarProdutos(produtos){
+function renderizarProdutos(produtos) {
     const formatoMoeda = new Intl.NumberFormat('pt-BR', {
-            style: 'currency',
-            currency: 'BRL',
-        });
-    catalogo.innerHTML='';   
+        style: 'currency',
+        currency: 'BRL',
+    });
+
+    catalogo.innerHTML = '';   
+    
     produtos.forEach(p => {
-        const preco = p.preco
-        const precoBR = formatoMoeda.format(preco)
+
+        const produtoString = JSON.stringify(p).replace(/'/g, "&apos;");
+
+        const precoBR = formatoMoeda.format(p.preco);
 
         const divCard = document.createElement('div');
         divCard.classList.add("card-prod");
-        divCard.innerHTML = `<div class="cont-img"><img 
-            src="${p.imagem}" 
-            alt="teste" 
-            class="img-prod"
-            > </div>
+        
+        divCard.innerHTML = `
+            <div class="cont-img">
+                <img src="${p.imagem}" alt="${p.titulo}" class="img-prod"> 
+            </div>
             <h3 class="title-prod">${p.titulo}</h3>
             <h4 class="preco-prod">${precoBR}</h4>
-            <button class="detalhes"> Ver detalhes </button>
-            <button class="comprar" onclick="adicionarCarrinho(${p.id})"> Adicionar ao carrinho </button>`
+            <a href="../detalhes/detalhes.html?id=${p.id}" class="detalhes"> Ver detalhes </a>
+            <button class="comprar" onclick='adicionarAoCarrinho(${produtoString})'> 
+                Adicionar ao carrinho 
+            </button>`;
+            
         catalogo.appendChild(divCard);
     });
 }
@@ -106,3 +113,4 @@ async function carregarProdutos(url){
         console.log(error)
     }
 }
+

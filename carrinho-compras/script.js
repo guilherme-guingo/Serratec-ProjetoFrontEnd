@@ -200,6 +200,25 @@ function removerItem(id) {
     atualizarResumo();
 }
 
+function adicionarAoCarrinho(produto) {
+    // 1. Busca o que já existe ou cria um array vazio
+    let itens = JSON.parse(localStorage.getItem('devcare_items')) || [];
+
+    // 2. Verifica se o item já está no carrinho para apenas somar a quantidade
+    const index = itens.findIndex(item => item.id === produto.id);
+    
+    if (index !== -1) {
+        itens[index].quantidade = (itens[index].quantidade || 1) + 1;
+    } else {
+        // Garante que o item comece com quantidade 1
+        produto.quantidade = 1;
+        itens.push(produto);
+    }
+
+    // 3. Salva de volta no LocalStorage
+    localStorage.setItem('devcare_items', JSON.stringify(itens));
+}
+
 /**
  * INICIALIZAÇÃO
  */
