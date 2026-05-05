@@ -85,7 +85,9 @@ function renderizarProdutos(produtos) {
         
         divCard.innerHTML = `
             <div class="cont-img">
-                <img src="${p.imagem}" alt="${p.titulo}" class="img-prod"> 
+                <a href="../detalhes/detalhes.html?id=${p.id}"> 
+                    <img src="${p.imagem}" alt="Ir para a página de detalhes do produto ${p.titulo}" class="img-prod">  
+                </a>
             </div>
             <h3 class="title-prod">${p.titulo}</h3>
             <h4 class="preco-prod">${precoBR}</h4>
