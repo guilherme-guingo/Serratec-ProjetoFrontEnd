@@ -26,6 +26,9 @@ enviar.addEventListener('click', async function (e){
     if(tipo.value.trim() !== ''){
         dadosAtualizados.tipo = tipo.value;
     }
+    if(descricao.value.trim() !== ''){
+        dadosAtualizados.descricao = descricao.value;
+    }
     atualizarProduto(url, dadosAtualizados)
 })
 
