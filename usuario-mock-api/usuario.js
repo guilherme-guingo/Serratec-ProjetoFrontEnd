@@ -330,7 +330,7 @@ function renderizarHistorico() {
     }).join('');
 }
 
-// Funções auxiliares chamadas via HTML onclick
+// Funções auxiliares
 function fazerLogout() {
     if(confirm('Deseja sair?')) {
         localStorage.removeItem('devcare_session');
@@ -338,8 +338,151 @@ function fazerLogout() {
     }
 }
 
+// Função para atualizar Nome, CPF e Telefone
+async function salvarDadosPerfil() {
+    let sessaoAtual = JSON.parse(localStorage.getItem('devcare_session'));
+    if (!sessaoAtual) return;
+
+    const novoNome = document.getElementById('user-input-nome').value;
+    const novoCpf = document.getElementById('user-input-cpf').value;
+    const novoTelefone = document.getElementById('user-input-telefone').value;
+
+    if (!novoNome) {
+        alert("O nome completo é obrigatório.");
+        return;
+    }
+
+    sessaoAtual.nome = novoNome;
+    sessaoAtual.cpf = novoCpf;
+    sessaoAtual.telefone = novoTelefone;
+
+    const btn = document.querySelector('button[onclick="salvarDadosPerfil()"]');
+    const textoOriginal = btn.innerText;
+    btn.innerText = "Salvando...";
+    btn.disabled = true;
+
+    const sucesso = await salvarAlteracoesAPI(sessaoAtual);
+
+    if (sucesso) {
+        const primeiroNome = novoNome.split(' ')[0];
+        document.getElementById('user-display-name').textContent = `Olá, ${primeiroNome}!`;
+        alert("Seus dados foram atualizados com sucesso!");
+    } else {
+        alert("Erro ao salvar os dados no servidor. Tente novamente.");
+    }
+
+    btn.innerText = textoOriginal;
+    btn.disabled = false;
+}
+
+// Função para Excluir a Conta 
+async function excluirConta() {
+    if (!confirm("Tem certeza ABSOLUTA que deseja excluir sua conta? Esta ação apagará todos os seus dados e não pode ser desfeita.")) {
+        return;
+    }
+
+    let sessaoAtual = JSON.parse(localStorage.getItem('devcare_session'));
+    if (!sessaoAtual) return;
+
+    try {
+        const response = await fetch(`${API_USERS}/${sessaoAtual.id}`, {
+            method: 'DELETE'
+        });
+
+        if (response.ok) {
+            alert("Sua conta foi excluída com sucesso. Sentiremos sua falta!");
+            localStorage.removeItem('devcare_session');
+            window.location.replace('../index.html');
+        } else {
+            alert("Erro ao excluir conta. Tente novamente.");
+        }
+    } catch (error) {
+        console.error("Erro ao excluir conta:", error);
+        alert("Erro de conexão ao tentar excluir a conta.");
+    }
+}
+
+function abrirModalEndereco(index = -1) {
+    const form = document.getElementById('form-endereco');
+    const inputIndex = document.getElementById('endereco-index');
+    const tituloModal = document.getElementById('modalEnderecoTitle');
+    
+    inputIndex.value = index;
+
+    if (index === -1) {
+        form.reset(); 
+        tituloModal.innerText = 'Novo Endereço';
+    } else {
+        let sessaoAtual = JSON.parse(localStorage.getItem('devcare_session'));
+        let end = sessaoAtual.enderecos[index];
+        
+        document.getElementById('end-titulo').value = end.titulo;
+        document.getElementById('end-cep').value = end.cep;
+        document.getElementById('end-rua').value = end.rua;
+        document.getElementById('end-numero').value = end.numero;
+        document.getElementById('end-complemento').value = end.complemento || '';
+        document.getElementById('end-bairro').value = end.bairro;
+        document.getElementById('end-cidade').value = end.cidade;
+        document.getElementById('end-uf').value = end.uf;
+        
+        tituloModal.innerText = 'Editar Endereço';
+    }
+
+    const modalElement = document.getElementById('modalEndereco');
+    let modalEndereco = bootstrap.Modal.getInstance(modalElement);
+    if (!modalEndereco) {
+        modalEndereco = new bootstrap.Modal(modalElement);
+    }
+    modalEndereco.show();
+}
 async function removerEndereco(index) {
     let sessaoAtual = JSON.parse(localStorage.getItem('devcare_session'));
     sessaoAtual.enderecos.splice(index, 1);
     if(await salvarAlteracoesAPI(sessaoAtual)) renderizarEnderecos();
 }
+
+document.addEventListener('DOMContentLoaded', () => {
+    const formAlterarSenha = document.getElementById('form-alterar-senha');
+    
+    if (formAlterarSenha) {
+        formAlterarSenha.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            let sessaoAtual = JSON.parse(localStorage.getItem('devcare_session'));
+            if (!sessaoAtual) return;
+
+            const senhaAtual = document.getElementById('senha-atual').value;
+            const senhaNova = document.getElementById('senha-nova').value;
+            const senhaNovaConfirma = document.getElementById('senha-nova-confirma').value;
+
+            if (senhaAtual !== sessaoAtual.senha) {
+                alert("A senha atual informada está incorreta.");
+                return;
+            }
+
+            if (senhaNova !== senhaNovaConfirma) {
+                alert("As novas senhas digitadas não coincidem.");
+                return;
+            }
+
+            sessaoAtual.senha = senhaNova;
+            
+            const btn = this.querySelector('button[type="submit"]');
+            const textoOriginal = btn.innerText;
+            btn.innerText = "Atualizando...";
+            btn.disabled = true;
+
+            const sucesso = await salvarAlteracoesAPI(sessaoAtual);
+
+            if (sucesso) {
+                alert("Sua senha foi atualizada com sucesso!");
+                this.reset();
+            } else {
+                alert("Erro de comunicação com a API. A senha não foi salva.");
+            }
+
+            btn.innerText = textoOriginal;
+            btn.disabled = false;
+        });
+    }
+});
