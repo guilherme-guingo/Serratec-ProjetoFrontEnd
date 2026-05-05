@@ -57,24 +57,49 @@ function carregarCarrinho() {
 function atualizarResumo() {
     const subtotalElement = document.getElementById('subtotal-valor');
     const totalElement = document.getElementById('total-valor');
+    // --- AJUSTE 1: Captura o novo elemento do HTML ---
+    const descontoElement = document.getElementById('desconto-valor'); 
+    
     const btnFinalizar = document.querySelector('.btn-finalize');
     const itens = document.querySelectorAll('.product-item');
     
-    let totalGeral = 0;
+    let subtotalGeral = 0;
     let totalItens = 0; 
 
+    // 1. Calcula o valor bruto e a quantidade total de itens
     itens.forEach(item => {
         const precoUnitario = parseFloat(item.querySelector('.product-price').getAttribute('data-price'));
         const quantidade = parseInt(item.querySelector('.qty-control input').value);
 
-        if (!isNaN(precoUnitario)) totalGeral += (precoUnitario * quantidade);
+        if (!isNaN(precoUnitario)) subtotalGeral += (precoUnitario * quantidade);
         if (!isNaN(quantidade)) totalItens += quantidade;
     });
 
-    const formatado = totalGeral.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+    // 2. Lógica de Desconto (Regras de negócio)
+    let percentualDesconto = 0;
+
+    if (subtotalGeral > 200) {
+        percentualDesconto = 0.10; // 10% de desconto
+    } else if (subtotalGeral > 100) {
+        percentualDesconto = 0.05; // 5% de desconto
+    }
+
+    const valorDesconto = subtotalGeral * percentualDesconto;
+    const valorTotalFinal = subtotalGeral - valorDesconto;
+
+    // 3. Formatação para Real (BRL)
+    const formatarMoeda = (valor) => {
+        return valor.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+    };
     
-    if (subtotalElement) subtotalElement.innerText = formatado;
-    if (totalElement) totalElement.innerText = formatado;
+    // 4. Atualiza os elementos na tela
+    if (subtotalElement) subtotalElement.innerText = formatarMoeda(subtotalGeral);
+    if (totalElement) totalElement.innerText = formatarMoeda(valorTotalFinal);
+
+    // --- AJUSTE 2: Exibe o valor do desconto calculado no campo verde ---
+    if (descontoElement) {
+        descontoElement.innerText = `- ${formatarMoeda(valorDesconto)}`;
+    }
 
     // Gerencia o estado do botão de finalizar
     if (btnFinalizar) {

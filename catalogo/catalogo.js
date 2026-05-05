@@ -85,7 +85,9 @@ function renderizarProdutos(produtos) {
         
         divCard.innerHTML = `
             <div class="cont-img">
-                <img src="${p.imagem}" alt="${p.titulo}" class="img-prod"> 
+                <a href="../detalhes/detalhes.html?id=${p.id}"> 
+                    <img src="${p.imagem}" alt="Ir para a página de detalhes do produto ${p.titulo}" class="img-prod">  
+                </a>
             </div>
             <h3 class="title-prod">${p.titulo}</h3>
             <h4 class="preco-prod">${precoBR}</h4>
@@ -114,3 +116,30 @@ async function carregarProdutos(url){
     }
 }
 
+// Função para gerenciar a adição de itens ao carrinho
+function adicionarAoCarrinho(produto) {
+    // 1. Recupera os itens salvos
+    let carrinho = JSON.parse(localStorage.getItem('devcare_items')) || [];
+
+    // 2. Verifica se o produto já existe
+    const index = carrinho.findIndex(item => item.id === produto.id);
+
+    if (index !== -1) {
+        carrinho[index].quantidade = (parseInt(carrinho[index].quantidade) || 1) + 1;
+    } else {
+        produto.quantidade = 1;
+        carrinho.push(produto);
+    }
+
+    // 3. Salva no localStorage
+    localStorage.setItem('devcare_items', JSON.stringify(carrinho));
+
+    // 4. ATUALIZA O CONTADOR (Gatilho para o main.js)
+    if (typeof atualizarContadorGlobal === 'function') {
+        atualizarContadorGlobal();
+    }
+
+    // O alert foi removido. 
+    // O console.log ajuda você a debugar sem interromper o usuário.
+    console.log(`Sucesso: ${produto.titulo} no carrinho.`);
+}

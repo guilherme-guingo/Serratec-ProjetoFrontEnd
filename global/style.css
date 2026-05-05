@@ -1,0 +1,15 @@
+/* Estilo para o contador na navbar */
+#cart-count {
+    font-size: 0.65rem;
+    padding: 0.25em 0.45em;
+    font-family: 'Poppins', sans-serif;
+    /* Ajuste de cor para combinar com a Devcare */
+    background-color: #2d3436; 
+    color: #fff;
+}
+
+/* Garante que o ícone pai seja o ponto de referência */
+.position-relative {
+    display: inline-flex !important;
+    align-items: center;
+}

@@ -62,3 +62,37 @@ function simularLogin(status) {
     console.log("Estado de login alterado para:", status);
     // Opcional: location.reload(); // Descomente para atualizar a página automaticamente ao testar
 }
+
+/**
+ * Lógica Global para o Contador do Carrinho
+ */
+/**
+ * Lógica Global para o Contador do Carrinho (UNIFICADA)
+ */
+function atualizarContadorGlobal() {
+    const cartCountElement = document.getElementById('cart-count');
+    if (!cartCountElement) return;
+
+    // Busca os itens reais do carrinho
+    const itens = JSON.parse(localStorage.getItem('devcare_items')) || [];
+    
+    const totalItens = itens.reduce((acumulador, item) => {
+        return acumulador + (parseInt(item.quantidade) || 0);
+    }, 0);
+    
+    // Sincroniza também a chave de contagem simples, se você a usar em outro lugar
+    localStorage.setItem('devcare_cart_count', totalItens);
+
+    cartCountElement.innerText = totalItens;
+    cartCountElement.style.display = totalItens === 0 ? 'none' : 'block';
+
+    // GARANTIA: Não há alert() aqui.
+    console.log("Contador atualizado para:", totalItens);
+}
+
+/**
+ * Inicialização
+ */
+document.addEventListener('DOMContentLoaded', () => {
+    atualizarContadorGlobal();
+});

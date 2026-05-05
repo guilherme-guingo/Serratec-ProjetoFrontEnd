@@ -94,9 +94,11 @@
                     <span>Subtotal</span>
                     <span id="subtotal-valor">R$ 0,00</span>
                 </div>
+                
                 <div class="summary-row">
                     <span>Desconto</span>
-                    <span>- R$ 0,00</span>
+                    <!-- MUDANÇA AQUI: ID acrescentado para o JS e cor verde para destaque -->
+                    <span id="desconto-valor" class="text-success">- R$ 0,00</span>
                 </div>
 
                 <div class="summary-row total-row">
@@ -145,12 +147,11 @@
         </div>
     </div>
 
-    <!-- 2. MODAL DE AVISO: LOGIN NECESSÁRIO (SEGUE O MESMO VISUAL) -->
+    <!-- 2. MODAL DE AVISO: LOGIN NECESSÁRIO -->
     <div class="modal fade" id="modalLoginObrigatorio" tabindex="-1" aria-hidden="true" data-bs-backdrop="static">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content border-0 shadow-lg">
                 <div class="modal-body text-center p-5">
-                    <!-- Ícone de Atenção seguindo o padrão de 5rem -->
                     <span class="material-symbols-rounded mb-3" style="font-size: 5rem;">
                         account_circle
                     </span>
