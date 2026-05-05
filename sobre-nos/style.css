@@ -5,24 +5,15 @@
   box-sizing: border-box;
 }
 
-/* HTML*/
+/* BASE */
 html {
   font-size: 16px;
 }
-/* BODY E CARACTERISTICAS GERAIS*/
+
 body {
   font-family: "Inter", sans-serif;
   background-color: #f2efdc;
-  padding: 1.5rem 1.25rem;
   color: #404040;
-}
-
-/* QUEBRA DE TEXTO */
-p,
-h1,
-h2,
-h3 {
-  word-break: break-word;
 }
 
 /* TIPOGRAFIA */
@@ -37,23 +28,60 @@ h1 {
 h2 {
   font-size: 1.6rem;
 }
-
 p {
   font-size: 1rem;
   line-height: 1.6;
 }
-/* SECÕES COM CARACTERISTICAS ESPECIFICAS DE CADA */
 
-/* SEÇÃO 1: Apresentação */
-.destaque {
-  color: #6b7334;
-  font-size: 1.1rem;
+p,
+h1,
+h2,
+h3 {
+  word-break: break-word;
+}
+
+/* NAVBAR */
+.navbar {
+  background-color: #f2efdc;
+  border-bottom: 1px solid rgba(107, 115, 52, 0.15);
+  z-index: 100;
+  padding: 0.75rem 1.25rem;
+}
+
+.navbar-brand {
+  font-family: "Playfair Display", serif;
+  font-size: 1.3rem;
+  color: #6b7334 !important;
+  font-weight: 700;
+}
+
+.nav-link {
+  color: #404040 !important;
+  font-size: 1rem;
+}
+
+.nav-link:hover,
+.nav-link.active {
+  color: #6b7334 !important;
   font-weight: 600;
 }
+
+/*___________________________________________ */
+/* SEÇÃO 1: Apresentação */
+.sessao1 {
+  padding: 1.5rem 1.25rem 4rem;
+}
+
+.destaque {
+  color: #6b7334;
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
 .descricao {
-  font-size: 1rem;
   margin-top: 1rem;
 }
+
 .imgEquipe {
   width: 100%;
   border-radius: 1rem;
@@ -63,50 +91,54 @@ p {
 /*___________________________________________ */
 /* SEÇÃO 2: Indicadores */
 .sessao2 {
-  background: #6b7334;
+  background-color: #6b7334;
   border-radius: 2rem;
-  padding: 1rem;
-  margin-top: -3rem;
-  position: relative;
-  z-index: 2;
+  padding: 0.5rem;
+  margin: -3rem 1.25rem 0;
   display: flex;
   flex-wrap: wrap;
+  gap: 1px;
+  overflow: hidden;
 }
+
+/* Cada bloco */
 .sessao2 div {
+  background-color: #6b7334;
   width: 100%;
-  padding: 0.6rem;
+  padding: 1rem;
   text-align: center;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.2);
 }
-.sessao2 p,
-.dados {
-  color: #fff;
-}
-.sessao2 p {
-  font-size: 1rem;
-}
+
 /* Ícone */
 .sessao2 i {
   color: #d9a273;
-  font-size: 1.8rem;
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
 }
+
 /* Dados em destaque */
 .dados {
-  font-size: 3.2rem;
+  color: #ffffff;
+  font-size: 2.5rem;
   font-weight: 700;
-  line-height: 1.1;
+}
+
+.sessao2 p {
+  color: #ffffff;
 }
 
 /*___________________________________________ */
 /* SEÇÃO 3: Missão, Visão e Valores */
 .sessao3 {
   margin-top: 2rem;
+  padding: 0 1.25rem;
 }
 
 .titMVV {
-  font-size: 1.6rem;
   margin-bottom: 1rem;
 }
+
 .card-mvv {
   display: flex;
   gap: 1rem;
@@ -115,20 +147,18 @@ p {
   background: rgba(217, 202, 173, 0.3);
   border-left: 3px solid #6b7334;
   border-radius: 0.75rem;
-  align-items: flex-start;
 }
-.card-mvv div {
-  min-width: 0;
-}
+
 .card-mvv i {
   font-size: 2rem;
   color: #6b7334;
 }
+
 .card-mvv h3 {
   font-size: 1.3rem;
 }
+
 .card-mvv p {
-  font-size: 1rem;
   color: #70735d;
 }
 
@@ -136,11 +166,9 @@ p {
 /* SEÇÃO 4: Depoimentos */
 .sessao4 {
   margin-top: 2rem;
+  padding: 0 1.25rem;
 }
-.titdepoimento {
-  font-size: 1.6rem;
-  margin-bottom: 1rem;
-}
+
 .card-depoimento {
   display: none;
   background: #fff;
@@ -149,20 +177,17 @@ p {
   text-align: center;
   border: 1px solid #70735d;
 }
+
 .card-depoimento.ativo {
   display: block;
 }
+
 .foto-cliente {
   width: 4rem;
   height: 4rem;
   border-radius: 50%;
 }
-.sessao4 h3 {
-  font-size: 1.1rem;
-}
-.sessao4 p {
-  font-size: 1rem;
-}
+
 /* Indicadores do carrossel */
 .indicadores {
   display: flex;
@@ -170,51 +195,53 @@ p {
   gap: 0.5rem;
   margin-top: 1rem;
 }
+
 .indicador {
   width: 0.6rem;
   height: 0.6rem;
   border-radius: 50%;
-  background-color: #d9caad;
+  background: #d9caad;
 }
+
 .indicador.ativo {
-  background-color: #6b7334;
+  background: #6b7334;
 }
 
 /*___________________________________________ */
 /* SEÇÃO 5: Newsletter */
 .sessao5 {
   background: rgba(217, 202, 173, 0.4);
-  margin-top: 3rem;
+  margin: 3rem 1.25rem 0;
   border-radius: 0.5rem;
   padding: 1rem;
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
   gap: 1rem;
 }
+
 .sessao5 i {
   font-size: 3rem;
   color: #70735d;
 }
-.conteudo-newsletter {
-  width: 100%;
-}
+
 /* Grupo de entrada da Newsletter */
 .input-grupo {
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
-  margin-top: 0.75rem;
 }
+
 .input-grupo input,
 .input-grupo button {
   width: 100%;
 }
+
 .input-grupo input {
   padding: 0.6rem;
   border: 1px solid #70735d;
   border-radius: 0.5rem;
 }
+
 .input-grupo button {
   font-size: 1rem;
   padding: 0.6rem;
@@ -222,7 +249,6 @@ p {
   color: #fff;
   border: none;
   border-radius: 1rem;
-  cursor: pointer;
 }
 
 /*___________________________________________ */
@@ -230,32 +256,27 @@ p {
 .sessao6 {
   background: #6b7334;
   padding: 1.5rem;
-  margin: 2rem 0 2rem 0;
+  margin: 2rem 1.25rem;
   border-radius: 1rem;
   display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
+  gap: 1.5rem;
 }
+
 .sessao6 img {
   width: 100%;
   max-width: 250px;
-  height: auto;
 }
-.sessao6 div {
-  max-width: 500px;
-}
-.sessao6 h2 {
-  color: #fff;
-  font-size: 1.5rem;
-}
+
+.sessao6 h2,
 .sessao6 p {
   color: #fff;
-  font-size: 1rem;
 }
+
 .sessao6 a {
   display: inline-block;
-  font-size: 1rem;
   padding: 0.7rem 1.3rem;
   background: #d9a273;
   color: #fff;
@@ -265,23 +286,56 @@ p {
 }
 
 /*___________________________________________ */
-/* RESPONSIVIDADE: Desktop */
+/* FOOTER */
+.rodape {
+  background: var(--footer-bg);
+  color: #e5e5e5;
+  padding: 3rem 1.25rem 1.5rem;
+  border-top: 1px solid rgba(107, 115, 52, 0.15);
+}
+
+.logo-rodape {
+  font-family: "Playfair Display", serif;
+  font-weight: 700;
+  color: #ffffff !important;
+}
+
+.link-rodape {
+  display: block;
+  color: #a0a0a0 !important;
+  font-size: 0.95rem;
+  margin-bottom: 0.3rem;
+}
+
+.link-rodape:hover {
+  color: var(--primary-green) !important;
+}
+
+/* RESPONSIVO (ÚNICO BREAKPOINT) */
 @media (min-width: 768px) {
   html {
-    font-size: 20px;
+    font-size: 16px;
   }
 
-  body {
-    padding: 2rem 4rem;
+  .sessao1,
+  .sessao3,
+  .sessao4 {
+    padding-left: 4rem;
+    padding-right: 4rem;
+  }
+
+  .sessao2 {
+    margin: -3rem 4rem 0;
   }
 
   .sessao2 div {
-    width: 50%;
+    width: calc(50% - 0.5px);
   }
 
   .sessao5 {
     flex-direction: row;
     align-items: center;
+    justify-content: center;
   }
 
   .input-grupo {
@@ -290,7 +344,6 @@ p {
 
   .input-grupo input {
     flex: 1;
-    width: auto;
   }
 
   .input-grupo button {
@@ -299,15 +352,20 @@ p {
 
   .sessao6 {
     flex-direction: row;
-    text-align: left;
+    text-align: row;
     justify-content: center;
-    align-items: center;
-    gap: 2rem;
   }
 
   .sessao6 img {
-    max-width: 350px;
-    height: 300px;
-    object-fit: cover;
+    width: 50%;
+    max-width: 400px;
+  }
+
+  .sessao6 div {
+    width: 50%;
+  }
+
+  .rodape {
+    padding: 3rem 4rem;
   }
 }
