@@ -1,21 +1,19 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"> <!--Bootstrap-->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"> <!--Utilização de Tags-->
-    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet"> <!--Fonte Poppins-->
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="./catalogo.css">
-    <link rel="stylesheet" href="../style.css">
-    <script src="../carrinho-compras/script.js" defer></script>
-    <script src="./catalogo.js" defer></script>
-</head>
-<body>
+    <title>DevCare - Login e Cadastro</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
     
-        <nav class="navbar navbar-expand-lg sticky-top">
+    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="usuario.css">
+</head>
+<body class="d-flex flex-column min-vh-100">
+
+    <nav class="navbar navbar-expand-lg sticky-top">
         <div class="container">
             <a class="navbar-brand" href="../index.html">
                 <i class="fas fa-leaf me-2"></i>DEVCARE
@@ -32,7 +30,7 @@
                         <a class="nav-link" href="../sobre-nos/index.html">Sobre Nós</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active" href="../catalogo/catalogo.html">Produtos</a>
+                        <a class="nav-link" href="../catalogo/catalogo.html">Produtos</a>
                     </li>
                 </ul>
                 <div class="d-flex align-items-center gap-3">
@@ -49,51 +47,61 @@
             </div>
         </div>
     </nav>
-    
 
-    <div class="header-produtos">
-        <img src="https://imagizer.imageshack.com/img924/2644/HWF4SA.png" alt="" class="banner">
-        <h1 class="titulo-catalogo">PRODUTOS</h1>
-    </div>
-
-    <div class="container-teste">
-        <div class="container-filtros">
-            <h1>Filtros</h1>
-            <div class="filtro">
-                <h6>Categoria</h6>
-                <form id="filtros-categoria">
-                    <input type="checkbox" value="Higiene Pessoal"> Higiene Pessoal<br>
-                    <input type="checkbox" value="Cuidados"> Cuidados<br>
-                    <input type="checkbox" value="Urgências"> Urgências
-                </form>
-            </div>
+    <main class="container my-5 d-flex justify-content-center align-items-center flex-grow-1">
+        <div class="card p-4 auth-card w-100 shadow-sm" style="max-width: 450px;">
             
-            <div class="filtro">
-                <h6>Tipos</h6>
-                <form id="filtros-tipo">
-                    <input type="checkbox" value="Shampoo"> Shampoo <br>
-                    <input type="checkbox" value="Sabonete"> Sabonete <br>
-                    <input type="checkbox" value="Condicionador"> Condicionador<br>
-                    <input type="checkbox" value="Creme"> Creme<br>
-                    <input type="checkbox" value="Finalizador"> Finalizador<br>
-                    <input type="checkbox" value="Tônico"> Tônico<br>
-                    <input type="checkbox" value="Corretivo"> Corretivo<br>
-                    <input type="checkbox" value="Desodorante"> Desodorante<br>
-                    <input type="checkbox" value="Lenço"> Lenço<br>
-                    <input type="checkbox" value="Creme Dental"> Creme Dental<br>
-                    <input type="checkbox" value="Spray"> Spray
-                </form>
+            <ul class="nav nav-pills nav-justified mb-4 auth-tabs" id="authTabs">
+                <li class="nav-item">
+                    <button class="nav-link active" id="btn-login" onclick="toggleAuth('login')">Entrar</button>
+                </li>
+                <li class="nav-item">
+                    <button class="nav-link" id="btn-register" onclick="toggleAuth('register')">Cadastrar</button>
+                </li>
+            </ul>
 
+            <!-- Form Login -->
+            <form id="form-login" class="d-block">
+                <h4 class="text-center titulo-secao mb-4">Bem-vindo de volta!</h4>
+                <div class="mb-3">
+                    <label for="loginEmail" class="form-label small">E-mail</label>
+                    <input type="email" class="form-control input-devcare" id="loginEmail" placeholder="seu@email.com" required>
+                </div>
+                <div class="mb-3">
+                    <label for="loginSenha" class="form-label small">Senha</label>
+                    <input type="password" class="form-control input-devcare" id="loginSenha" placeholder="********" required>
+                </div>
+                <div class="d-flex justify-content-between align-items-center mb-4 small">
+                    <div class="form-check">
+                        <input type="checkbox" class="form-check-input" id="lembrarMim">
+                        <label class="form-check-label text-muted" for="lembrarMim">Lembrar de mim</label>
+                    </div>
+                    <a href="#" class="link-ver-todos">Esqueceu a senha?</a>
+                </div>
+                <button type="submit" class="btn btn-devcare w-100">Entrar na minha conta</button>
+            </form>
 
-            </div>
-            <button id="btn-filtro" class="btn-filtro">Aplicar filtros</button>
-            <button id="btn-apagar" class="btn-apagar">Apagar filtros</button>
+            <!-- Form Cadastro -->
+            <form id="form-register" class="d-none">
+                <h4 class="text-center titulo-secao mb-4">Crie sua conta</h4>
+                <div class="mb-3">
+                    <label for="regNome" class="form-label small">Nome Completo</label>
+                    <input type="text" class="form-control input-devcare" id="regNome" placeholder="Seu nome" required>
+                </div>
+                <div class="mb-3">
+                    <label for="regEmail" class="form-label small">E-mail</label>
+                    <input type="email" class="form-control input-devcare" id="regEmail" placeholder="seu@email.com" required>
+                </div>
+                <div class="mb-4">
+                    <label for="regSenha" class="form-label small">Senha</label>
+                    <input type="password" class="form-control input-devcare" id="regSenha" placeholder="********" required>
+                </div>
+                <button type="submit" class="btn btn-devcare w-100">Finalizar Cadastro</button>
+            </form>
         </div>
-        <div id="cata-produtos" class="catalogo-prod">
-            
-        </div>
-    </div>
-    <footer class="rodape">
+    </main>
+
+    <footer class="rodape mt-auto">
         <div class="container">
             <div class="row g-4 aling-items-start">
                 <div class="col-lg-3">
@@ -138,13 +146,16 @@
                 </div>
             </div>
             <hr class="my-5 border-secondary opacity-25">
-            <div class="row align-items-center flex-column flex-md-row text-center rodape-inferior">
+            <div class="row align-items-center flex-column flex-md-row text-center rodape-inferior pb-3">
                 <div class="mb-3 mb-md-0">
                     &copy; 2026 DevCare. Todos os direitos reservados.
                 </div>
             </div>
         </div>
     </footer>
+
+    <!-- Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="usuario.js"></script>
 </body>
 </html>
