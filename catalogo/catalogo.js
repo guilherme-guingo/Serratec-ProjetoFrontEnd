@@ -1,0 +1,108 @@
+const catalogo = document.getElementById("cata-produtos")
+const btnFiltrar = document.getElementById("btn-filtro")
+const btnApagar = document.getElementById("btn-apagar")
+const containerTipo = document.getElementById("filtros-tipo")
+const containerCategoria = document.getElementById("filtros-categoria")
+
+const url = "https://69f3d141bd2396bf531062ed.mockapi.io/produtos"
+
+
+document.addEventListener("DOMContentLoaded", async function() {
+    const produtos = await carregarProdutos(url);
+    salvarProdutos('produtos', produtos)
+    renderizarProdutos(produtos);
+});
+
+btnFiltrar.addEventListener('click', function(e){
+    e.preventDefault();
+    const {tipos, categorias } = filtros();
+    filtrarProdutos(tipos, categorias);
+})
+
+btnApagar.addEventListener('click', function(){
+    containerTipo.reset();
+    containerCategoria.reset();
+})
+
+function filtros(){
+    const tiposSelecionados = containerTipo.querySelectorAll('input[type="checkbox"]:checked');
+    const listaTipos = Array.from(tiposSelecionados).map(tp => tp.value);
+
+    const categoriasSelecionadas = containerCategoria.querySelectorAll('input[type="checkbox"]:checked');
+    const listaCategorias = Array.from(categoriasSelecionadas).map(ct => ct.value);
+
+    return {
+        tipos: listaTipos,
+        categorias: listaCategorias
+    };
+} 
+
+function filtrarProdutos(tipos, categorias){
+    const produtos = getProdutos('produtos');
+    console.log(produtos);
+    const produtosFiltrados = produtos.filter(p => {
+
+        const atendeCategoria = categorias.length === 0 || categorias.includes(p.categoria);
+        const atendeTipo = tipos.length === 0 || tipos.includes(p.tipo);
+
+        return atendeCategoria && atendeTipo;
+        });
+    console.log(produtosFiltrados);
+    renderizarProdutos(produtosFiltrados);
+}
+
+function salvarProdutos(key, value){
+    localStorage.setItem(key, JSON.stringify(value));
+}
+
+function getProdutos(key){
+    const produtosSalvos = localStorage.getItem(key);
+    if(produtosSalvos){
+        const produtos = JSON.parse(produtosSalvos);
+        return produtos;
+    }else{
+        console.log('Nenhum produto encontrado')
+        return [];
+    }
+}
+
+function renderizarProdutos(produtos){
+    const formatoMoeda = new Intl.NumberFormat('pt-BR', {
+            style: 'currency',
+            currency: 'BRL',
+        });
+    catalogo.innerHTML='';   
+    produtos.forEach(p => {
+        const preco = p.preco
+        const precoBR = formatoMoeda.format(preco)
+
+        const divCard = document.createElement('div');
+        divCard.classList.add("card-prod");
+        divCard.innerHTML = `<div class="cont-img"><img 
+            src="${p.imagem}" 
+            alt="teste" 
+            class="img-prod"
+            > </div>
+            <h3 class="title-prod">${p.titulo}</h3>
+            <h4 class="preco-prod">${precoBR}</h4>
+            <button class="detalhes"> Ver detalhes </button>
+            <button class="comprar" onclick="adicionarCarrinho(${p.id})"> Adicionar ao carrinho </button>`
+        catalogo.appendChild(divCard);
+    });
+}
+
+async function carregarProdutos(url){
+    try{
+        const response = await fetch(url)
+        const produtos = await response.json();
+        return produtos
+        
+
+        if (!response.ok){
+            throw new Error("Erro ao carregar produtos!")
+        }
+
+    } catch(error){
+        console.log(error)
+    }
+}
