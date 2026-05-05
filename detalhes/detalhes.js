@@ -3,12 +3,6 @@ const produtoId = urlParametro.get('id');
 const containerDetalhes = document.getElementById("container-detalhes");
 const url = "https://69f3d141bd2396bf531062ed.mockapi.io/produtos";
 
-<<<<<<< HEAD
-// Inicializa a carga do produto
-carregarProduto(produtoId);
-=======
->>>>>>> 502f54c62eeb5dfcd79bd444ff75fa8a733b5196
-
 document.addEventListener("DOMContentLoaded", async function() {
     const produto = await carregarProduto(url, produtoId);
     renderizarDetalhes(produto)
