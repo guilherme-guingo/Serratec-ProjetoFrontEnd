@@ -5,6 +5,7 @@ const btnVFiltros = document.getElementById("btn-aparece-filtros")
 const containerTipo = document.getElementById("filtros-tipo")
 const containerCategoria = document.getElementById("filtros-categoria")
 const menuFiltros = document.getElementById("menu-filtros")
+const popupCarrinho = document.getElementById("carrinho-popup")
 
 const url = "https://69f3d141bd2396bf531062ed.mockapi.io/produtos"
 
@@ -13,6 +14,14 @@ document.addEventListener("DOMContentLoaded", async function() {
     const produtos = await carregarProdutos(url);
     salvarProdutos('produtos', produtos)
     renderizarProdutos(produtos);
+});
+
+//abre popup
+catalogo.addEventListener('click', (e) => {
+    if(e.target.classList.contains('comprar')){
+    e.preventDefault();
+    exibirPopUp();
+    }
 });
 
 //listeners para botões do menu de filtros
@@ -107,8 +116,7 @@ function renderizarProdutos(produtos) {
             <a href="../detalhes/detalhes.html?id=${p.id}" class="detalhes"> Ver detalhes </a>
             <button class="comprar" onclick='adicionarAoCarrinho(${produtoString})'> 
                 Adicionar ao carrinho 
-            </button>`;
-            
+            </button>`;   
         catalogo.appendChild(divCard);
     });
 }
@@ -130,3 +138,14 @@ async function carregarProdutos(url){
     }
 }
 
+
+function exibirPopUp(){
+    popupCarrinho.classList.add('show')
+    setTimeout(() => {
+        popupCarrinho.classList.remove('show');
+    }, 3500);
+}
+
+function fecharPopup() {
+    popupCarrinho.classList.remove('show');
+}

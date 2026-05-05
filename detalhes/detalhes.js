@@ -2,11 +2,19 @@
 const urlParametro = new URLSearchParams(window.location.search);
 const produtoId = urlParametro.get('id');
 const containerDetalhes = document.getElementById("container-detalhes");
+const popupCarrinho = document.getElementById("carrinho-popup")
 const url = "https://69f3d141bd2396bf531062ed.mockapi.io/produtos";
 
 document.addEventListener("DOMContentLoaded", async function() {
     const produto = await carregarProduto(url, produtoId);
     renderizarDetalhes(produto)
+});
+
+containerDetalhes.addEventListener('click', (e) => {
+    if(e.target.classList.contains('comprar')){
+    e.preventDefault();
+    exibirPopUp();
+    }
 });
 
 // função que recebe a url e a id do produto e faz um get na api, retornando apenas o produto especifico
@@ -21,8 +29,6 @@ async function carregarProduto(url, id) {
             throw new Error('Produto não encontrado ou erro no servidor');
         }
         const produto = await response.json();
-
-        renderizarDetalhes(produto);
 
         return produto;
 
@@ -50,4 +56,15 @@ function renderizarDetalhes(produto){
                 ADICIONAR AO CARRINHO
             </button>
         </div>`;
+}
+
+function exibirPopUp(){
+    popupCarrinho.classList.add('show')
+    setTimeout(() => {
+        popupCarrinho.classList.remove('show');
+    }, 3500);
+}
+
+function fecharPopup() {
+    popupCarrinho.classList.remove('show');
 }
