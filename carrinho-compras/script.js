@@ -242,23 +242,32 @@ function removerItem(id) {
 }
 
 function adicionarAoCarrinho(produto) {
-    // 1. Busca o que já existe ou cria um array vazio
-    let itens = JSON.parse(localStorage.getItem('devcare_items')) || [];
+    // 1. Recupera os itens salvos
+    let carrinho = JSON.parse(localStorage.getItem('devcare_items')) || [];
 
-    // 2. Verifica se o item já está no carrinho para apenas somar a quantidade
-    const index = itens.findIndex(item => item.id === produto.id);
-    
+    // 2. Verifica se o produto já existe
+    const index = carrinho.findIndex(item => item.id === produto.id);
+
     if (index !== -1) {
-        itens[index].quantidade = (itens[index].quantidade || 1) + 1;
+        carrinho[index].quantidade = (parseInt(carrinho[index].quantidade) || 1) + 1;
     } else {
-        // Garante que o item comece com quantidade 1
         produto.quantidade = 1;
-        itens.push(produto);
+        carrinho.push(produto);
     }
 
-    // 3. Salva de volta no LocalStorage
-    localStorage.setItem('devcare_items', JSON.stringify(itens));
+    // 3. Salva no localStorage
+    localStorage.setItem('devcare_items', JSON.stringify(carrinho));
+
+    // 4. ATUALIZA O CONTADOR (Gatilho para o main.js)
+    if (typeof atualizarContadorGlobal === 'function') {
+        atualizarContadorGlobal();
+    }
+
+    // O alert foi removido. 
+    // O console.log ajuda você a debugar sem interromper o usuário.
+    console.log(`Sucesso: ${produto.titulo} no carrinho.`);
 }
+
 
 /**
  * INICIALIZAÇÃO

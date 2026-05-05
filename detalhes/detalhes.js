@@ -45,7 +45,7 @@ function renderizarDetalhes(produto){
             <h2>${produto.titulo}</h2>
             <p class="preco">${precoBR}</p>
             <p>${produto.descricao}</p>
-            <button class="comprar" onclick='adicionarDesteProduto(${produtoString})'>
+            <button class="comprar" onclick='adicionarAoCarrinho(${produtoString})'>
                 ADICIONAR AO CARRINHO
             </button>
         </div>`;

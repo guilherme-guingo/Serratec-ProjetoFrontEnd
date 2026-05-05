@@ -20,7 +20,9 @@
     />
     <!--Fonte Poppins-->
     <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="../carrinho-compras/style.css">
     <!--CSS-->
+    <script src="../global/main.js" defer></script>
   </head>
   <body>
     <nav class="navbar navbar-expand-lg sticky-top">
@@ -55,12 +57,13 @@
             <a href="usuario/dashboard.html" class="text-dark">
               <i class="far fa-user"></i>
             </a>
-            <a href="carrinho-compras/index.html" class="text-dark">
-              <i class="fas fa-shopping-bag"></i>
-              <span id="cart-count" class="position-absolute top-0 start-100 translate-middle badge rounded-pill">
-              0
-              </span>
-            </a>
+            <!-- <a href="carrinho-compras/index.html" class="text-dark"> -->
+              <a href="../carrinho-compras/index.html" class="text-dark text-decoration-none position-relative">
+                <i class="fas fa-shopping-bag"></i>
+                <span id="cart-count" class="position-absolute top-0 start-100 translate-middle badge rounded-pill" style="display: block;">2</span>
+
+              </a>
+
           </div>
         </div>
       </div>
